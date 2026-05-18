@@ -1,0 +1,265 @@
+/* ------------------------------
+   GLOBAL STYLING
+------------------------------ */
+
+body {
+
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    background-image: url('Images/pexels-theo-30488678.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: white;
+}
+
+/* ------------------------------
+   FIXED NAVBAR
+------------------------------ */
+
+.navbar {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 40px;
+
+    background: rgba(0,0,0,0.55);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    z-index: 1000;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* Logo */
+
+.logo-section h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+}
+
+.logo-section p {
+
+    margin-top: 5px;
+
+    font-size: 14px;
+
+    color: #d7ffd9;
+}
+
+/* Navigation */
+
+.nav-links {
+
+    display: flex;
+
+    gap: 25px;
+
+    margin-right: 70px;
+}
+
+.nav-links a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+
+    color: #8cff95;
+}
+
+/* ------------------------------
+   MAIN GRID LAYOUT
+------------------------------ */
+
+.container {
+
+    width: 90%;
+
+    margin: 140px auto 40px auto;
+
+    display: grid;
+
+    grid-template-columns: 1.2fr 0.8fr;
+
+    gap: 45px;
+}
+
+/* ------------------------------
+   GLASS CARDS
+------------------------------ */
+
+.card {
+
+    background: rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    border-left: 5px solid #1d556a;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+
+    transition: 0.3s ease;
+}
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 12px 24px rgba(0,0,0,0.45);
+}
+
+/* ------------------------------
+   CUSTOM CARD SIZES
+------------------------------ */
+
+/* Personal Information */
+
+.card:nth-child(1) {
+
+    height: 400px;
+}
+
+/* Farmer Summary */
+
+.card:nth-child(2) {
+
+    height: 400px;
+}
+
+/* Achievements */
+
+.card:nth-child(3) {
+
+    grid-column: span 2;
+
+    height: 150px;
+}
+
+/* ------------------------------
+   HEADINGS
+------------------------------ */
+
+h2 {
+
+    margin-top: 0;
+
+    color: #1d556a;
+}
+
+/* ------------------------------
+   INPUTS
+------------------------------ */
+
+input,
+select {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    margin-top: 8px;
+    margin-bottom: 15px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    background: rgba(255,255,255,0.9);
+}
+
+/* ------------------------------
+   BUTTONS
+------------------------------ */
+
+button {
+
+    padding: 10px 20px;
+
+    background:#1d556a;
+
+    color: white;
+
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+button:hover {
+
+    background: #164252;
+
+    transform: scale(1.03);
+}
+
+/* ------------------------------
+   PROFILE SUMMARY
+------------------------------ */
+
+#profileSummary {
+
+    background: rgba(0,0,0,0.6);
+
+    padding: 15px;
+
+    border-radius: 8px;
+}
+
+/* ------------------------------
+   LISTS
+------------------------------ */
+
+ul {
+
+    list-style: none;
+
+    padding: 0;
+}
+
+li {
+
+    background: rgba(255,255,255,0.85);
+
+    color: rgb(0, 0, 0);
+
+    margin-bottom: 10px;
+
+    padding: 10px;
+
+    border-radius: 5px;
+}

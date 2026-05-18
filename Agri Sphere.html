@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgriSphere | Intelligent Agriculture Management Platform</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- AOS Animations -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #14532d;
+      --accent: #84cc16;
+      --surface: #ffffff;
+      --background: #f3f7f5;
+      --text: #1e293b;
+      --muted: #64748b;
+      --card: rgba(255,255,255,0.94);
+      --shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
+      --radius: 24px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(92%, 1400px);
+      margin: auto;
+    }
+
+    /* NAVIGATION */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,0.75);
+      border-bottom: 1px solid rgba(148,163,184,0.15);
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo span {
+      color: var(--primary-light);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-weight: 600;
+      transition: 0.3s ease;
+      color: var(--text);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-light);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      padding: 0.9rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)),
+        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1600&auto=format&fit=crop') center/cover;
+      display: flex;
+      align-items: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 3rem;
+      align-items: center;
+      padding-top: 7rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.7rem, 6vw, 5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+    }
+
+    .hero p {
+      max-width: 700px;
+      font-size: 1.08rem;
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 2rem;
+    }
+
+    .hero-cards {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 1.3rem;
+    }
+
+    .stat-card h3 {
+      font-size: 2rem;
+      margin-bottom: 0.2rem;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 0;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      color: var(--secondary);
+      line-height: 1.1;
+    }
+
+    .section-header p {
+      max-width: 760px;
+      color: var(--muted);
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    /* MAP */
+    #map {
+      width: 100%;
+      height: 680px;
+      border-radius: var(--radius);
+      z-index: 1;
+    }
+
+    .map-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .control-box {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .legend-color {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+    }
+
+    /* DASHBOARD */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .dashboard-card {
+      padding: 1.7rem;
+    }
+
+    .dashboard-card h3 {
+      margin-bottom: 0.8rem;
+      color: var(--secondary);
+    }
+
+    .progress {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+      margin-top: 0.8rem;
+    }
+
+    .progress div {
+      height: 100%;
+      border-radius: inherit;
+    }
+
+    /* THREE JS */
+    .three-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      align-items: center;
+    }
+
+    #three-container {
+      width: 100%;
+      height: 560px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: linear-gradient(180deg, #b8ecff, #d6f5d6);
+      position: relative;
+    }
+
+    .crop-controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .crop-stage {
+      background: white;
+      border-radius: 18px;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .media-card iframe,
+    .media-card video {
+      width: 100%;
+      height: 240px;
+      border: none;
+    }
+
+    .media-content {
+      padding: 1.3rem;
+    }
+
+    .media-content h3 {
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+    }
+
+    /* RESOURCES */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .resource-card {
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .resource-card h3 {
+      color: var(--secondary);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0f172a;
+      color: white;
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-grid p,
+    .footer-grid li {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .footer-bottom {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.75);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        text-align: center;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: start;
+      }
+
+      #map {
+        height: 520px;
+      }
+
+      #three-container {
+        height: 420px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container nav-content">
+      <div class="logo">🌱 Agri<span>Sphere</span></div>
+
+      <div class="nav-links">
+        <a href="#map-section">Farm Intelligence</a>
+        <a href="#crop-visualization">3D Crop Cycles</a>
+        <a href="#gallery">Media Hub</a>
+        <a href="#resources">Resources</a>
+        <a href="#footer">References</a>
+      </div>
+
+      <a class="btn" href="#map-section">Explore Dashboard</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div data-aos="fade-right">
+        <h1>Interactive Agriculture Intelligence Platform</h1>
+
+        <p>
+          Monitor soil health, visualize satellite crop conditions, analyze pest outbreak heatmaps,
+          and interact with realistic 3D crop growth simulations built for modern agriculture professionals,
+          educators, and sustainability stakeholders.
+        </p>
+
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="#map-section" class="btn">Open Live Farm Map</a>
+          <a href="#crop-visualization" class="btn" style="background:linear-gradient(135deg,#65a30d,#84cc16)">View 3D Crop Growth</a>
+        </div>
+      </div>
+
+      <div class="hero-cards" data-aos="fade-left">
+        <div class="stat-card">
+          <h3>89%</h3>
+          <p>Crop stress detection accuracy using Sentinel-2 NDVI datasets.</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>24/7</h3>
+          <p>Satellite-enabled monitoring integrating NASA EarthData and ESA Copernicus services.</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>42+</h3>
+          <p>Educational assets, downloadable templates, and farmer case studies.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="map-section">
+    <div class="container">
+
+      <div class="section-header" data-aos="fade-up">
+        <div>
+          <h2>Interactive Farm Intelligence Map</h2>
+        </div>
+
+        <p>
+          Explore geo-tagged farm plots powered by OpenStreetMap layers and satellite overlays.
+          Soil indicators include pH, moisture, nitrogen levels, and pest-risk visualization.
+          Heatmaps are derived from agricultural disease monitoring patterns inspired by FAO and ICAR advisory frameworks.
+        </p>
+      </div>
+
+      <div class="map-controls">
+        <div class="control-box">
+          <h3>Soil Health Metrics</h3>
+          <p><strong>pH:</strong> 6.3 - 7.1</p>
+          <p><strong>Moisture:</strong> 41% Average</p>
+          <p><strong>Nitrogen:</strong> Moderate</p>
+        </div>
+
+        <div class="control-box">
+          <h3>Satellite Insights</h3>
+          <p>Vegetation vigor and crop density visualized with NDVI-inspired overlays.</p>
+        </div>
+
+        <div class="control-box">
+          <h3>Pest Alert System</h3>
+          <p>Red clusters indicate elevated disease and pest outbreak probabilities.</p>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <span class="legend-color" style="background:#16a34a"></span>
+          Healthy Soil
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-color" style="background:#facc15"></span>
+          Moderate Nutrients
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-color" style="background:#dc2626"></span>
+          High Pest Risk
+        </div>
+      </div>
+
+      <div id="map" class="card" data-aos="zoom-in"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <div>
+          <h2>Crop Health Analytics Dashboard</h2>
+        </div>
+
+        <p>
+          Interactive farm indicators help agronomists and growers evaluate irrigation efficiency,
+          nutrient balance, yield potential, and disease exposure in real time.
+        </p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card dashboard-card" data-aos="fade-up">
+          <h3>Soil Moisture Stability</h3>
+          <p>Field irrigation consistency across monitored plots.</p>
+          <div class="progress"><div style="width:78%; background:#0f766e"></div></div>
+        </div>
+
+        <div class="card dashboard-card" data-aos="fade-up" data-aos-delay="100">
+          <h3>Crop Growth Index</h3>
+          <p>Satellite-based vegetative growth monitoring.</p>
+          <div class="progress"><div style="width:92%; background:#65a30d"></div></div>
+        </div>
+
+        <div class="card dashboard-card" data-aos="fade-up" data-aos-delay="200">
+          <h3>Pest Exposure Level</h3>
+          <p>Dynamic outbreak risk probability from climatic patterns.</p>
+          <div class="progress"><div style="width:36%; background:#dc2626"></div></div>
+        </div>
+
+        <div class="card dashboard-card" data-aos="fade-up" data-aos-delay="300">
+          <h3>Organic Carbon Health</h3>
+          <p>Long-term soil sustainability benchmark.</p>
+          <div class="progress"><div style="width:68%; background:#f59e0b"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="crop-visualization">
+    <div class="container">
+
+      <div class="section-header" data-aos="fade-up">
+        <div>
+          <h2>3D Crop Cycle Visualization</h2>
+        </div>
+
+        <p>
+          Experience an immersive crop growth simulation powered by Three.js.
+          Users can interactively visualize planting, germination, vegetative growth,
+          flowering, and harvest stages in a dynamic educational environment.
+        </p>
+      </div>
+
+      <div class="three-wrapper">
+        <div>
+          <div id="three-container"></div>
+        </div>
+
+        <div>
+          <div class="crop-stage" data-aos="fade-left">
+            <h3>🌾 Stage 1 — Soil Preparation</h3>
+            <p>Field leveling, organic matter incorporation, and precision irrigation planning begin the cycle.</p>
+          </div>
+
+          <div class="crop-stage" data-aos="fade-left" data-aos-delay="100">
+            <h3>🌱 Stage 2 — Germination</h3>
+            <p>Interactive growth stems simulate root expansion and moisture dependency.</p>
+          </div>
+
+          <div class="crop-stage" data-aos="fade-left" data-aos-delay="200">
+            <h3>🌿 Stage 3 — Vegetative Growth</h3>
+            <p>Plants dynamically scale and sway according to wind and hydration simulations.</p>
+          </div>
+
+          <div class="crop-stage" data-aos="fade-left" data-aos-delay="300">
+            <h3>🌼 Stage 4 — Flowering & Harvest</h3>
+            <p>Yield maturity indicators visualize optimal harvesting windows.</p>
+          </div>
+
+          <div class="crop-controls">
+            <button class="btn" id="growthBtn">Accelerate Growth</button>
+            <button class="btn" id="resetBtn" style="background:linear-gradient(135deg,#334155,#64748b)">Reset Cycle</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <div class="container">
+
+      <div class="section-header" data-aos="fade-up">
+        <div>
+          <h2>Educational Media & Success Stories</h2>
+        </div>
+
+        <p>
+          Curated learning content for students, agricultural professionals, and farming communities.
+          Featured resources include sustainable farming tutorials, precision irrigation techniques,
+          and farmer innovation stories.
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+
+        <div class="card media-card" data-aos="zoom-in">
+          <iframe src="https://www.youtube.com/embed/2J9X0QXxW6A" title="Precision Agriculture"></iframe>
+          <div class="media-content">
+            <h3>Precision Agriculture Technologies</h3>
+            <p>Explore how data-driven farming improves irrigation efficiency and crop yields.</p>
+          </div>
+        </div>
+
+        <div class="card media-card" data-aos="zoom-in" data-aos-delay="100">
+          <iframe src="https://www.youtube.com/embed/nl6rl7jZr4Q" title="Soil Health"></iframe>
+          <div class="media-content">
+            <h3>Understanding Soil Health</h3>
+            <p>Educational guidance on soil biodiversity, nutrient balance, and sustainable practices.</p>
+          </div>
+        </div>
+
+        <div class="card media-card" data-aos="zoom-in" data-aos-delay="200">
+          <iframe src="https://www.youtube.com/embed/VV2dW5qJf0Q" title="Farmer Story"></iframe>
+          <div class="media-content">
+            <h3>Farmer Innovation Success Story</h3>
+            <p>Real-world examples of digital agriculture adoption and improved productivity.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="resources">
+    <div class="container">
+
+      <div class="section-header" data-aos="fade-up">
+        <div>
+          <h2>Downloadable Templates & Reporting Resources</h2>
+        </div>
+
+        <p>
+          Access ready-to-use agricultural templates for crop reporting, soil analysis,
+          irrigation planning, sustainability presentations, and extension training.
+        </p>
+      </div>
+
+      <div class="resource-grid">
+
+        <div class="card resource-card" data-aos="fade-up">
+          <h3>📄 Soil Health Report Template</h3>
+          <p>Professional PDF layout for recording nutrient analysis, pH, moisture, and field conditions.</p>
+          <a href="https://www.fao.org/3/i4413e/i4413e.pdf" target="_blank" class="btn">Download PDF</a>
+        </div>
+
+        <div class="card resource-card" data-aos="fade-up" data-aos-delay="100">
+          <h3>📊 Crop Monitoring Presentation</h3>
+          <p>Editable presentation resource for educators, extension officers, and sustainability workshops.</p>
+          <a href="https://www.nasa.gov/earthdata/" target="_blank" class="btn">Access Resource</a>
+        </div>
+
+        <div class="card resource-card" data-aos="fade-up" data-aos-delay="200">
+          <h3>🌿 Irrigation Planning Worksheet</h3>
+          <p>Structured planning template for precision water management and crop scheduling.</p>
+          <a href="https://www.fao.org/land-water/databases-and-software/cropwat/en/" target="_blank" class="btn">Open Tool</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="container">
+
+      <div class="footer-grid">
+        <div>
+          <h2>AgriSphere</h2>
+          <p>
+            A modern agriculture intelligence interface integrating GIS visualization,
+            educational media, and 3D crop simulations for precision farming and agricultural learning.
+          </p>
+        </div>
+
+        <div>
+          <h3>Data References</h3>
+          <ul>
+            <li>NASA EarthData</li>
+            <li>ESA Sentinel Hub</li>
+            <li>FAO Soil Portal</li>
+            <li>ICAR Agricultural Advisory Services</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Technology Stack</h3>
+          <ul>
+            <li>Leaflet GIS Mapping</li>
+            <li>Three.js 3D Rendering</li>
+            <li>Responsive CSS Grid</li>
+            <li>OpenStreetMap Layers</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 AgriSphere Agricultural Technology Platform. Designed for educational and professional agricultural analytics.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Libraries -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+
+    /* ===============================
+       LEAFLET MAP
+    ================================ */
+
+    const map = L.map('map').setView([28.6139, 77.2090], 6);
+
+    const osmLayer = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        attribution: '&copy; OpenStreetMap contributors'
+      }
+    ).addTo(map);
+
+    const satelliteLayer = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      {
+        attribution: 'Tiles &copy; Esri'
+      }
+    );
+
+    const farms = [
+      {
+        name: 'Punjab Wheat Cluster',
+        coords: [31.1471, 75.3412],
+        health: 'Healthy Soil',
+        ph: 6.8,
+        moisture: '48%',
+        nitrogen: 'Optimal',
+        color: '#16a34a'
+      },
+      {
+        name: 'Haryana Rice Belt',
+        coords: [29.0588, 76.0856],
+        health: 'Moderate Nutrients',
+        ph: 6.4,
+        moisture: '39%',
+        nitrogen: 'Moderate',
+        color: '#facc15'
+      },
+      {
+        name: 'Maharashtra Cotton Zone',
+        coords: [19.7515, 75.7139],
+        health: 'High Pest Risk',
+        ph: 5.9,
+        moisture: '27%',
+        nitrogen: 'Low',
+        color: '#dc2626'
+      }
+    ];
+
+    farms.forEach(farm => {
+      const marker = L.circleMarker(farm.coords, {
+        radius: 14,
+        fillColor: farm.color,
+        color: '#fff',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.85
+      }).addTo(map);
+
+      marker.bindPopup(`
+        <div style="font-family:Inter,sans-serif; min-width:220px;">
+          <h3 style="margin-bottom:8px; color:#14532d;">${farm.name}</h3>
+          <p><strong>Soil Status:</strong> ${farm.health}</p>
+          <p><strong>Soil pH:</strong> ${farm.ph}</p>
+          <p><strong>Moisture:</strong> ${farm.moisture}</p>
+          <p><strong>Nitrogen:</strong> ${farm.nitrogen}</p>
+          <p style="margin-top:10px; color:#0f766e; font-size:0.9rem;">Geo-tagged farm intelligence node.</p>
+        </div>
+      `);
+    });
+
+    const overlayMaps = {
+      'Satellite Imagery': satelliteLayer
+    };
+
+    L.control.layers(null, overlayMaps).addTo(map);
+
+    // Pest Risk Heat Zones
+    const heatZones = [
+      {
+        coords: [19.7515, 75.7139],
+        radius: 80000,
+        color: '#dc2626'
+      },
+      {
+        coords: [22.9734, 78.6569],
+        radius: 60000,
+        color: '#fb7185'
+      }
+    ];
+
+    heatZones.forEach(zone => {
+      L.circle(zone.coords, {
+        color: zone.color,
+        fillColor: zone.color,
+        fillOpacity: 0.25,
+        radius: zone.radius
+      }).addTo(map);
+    });
+
+    /* ===============================
+       THREE JS CROP SIMULATION
+    ================================ */
+
+    const container = document.getElementById('three-container');
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0xd6f5d6, 10, 50);
+
+    const camera = new THREE.PerspectiveCamera(
+      60,
+      container.clientWidth / container.clientHeight,
+      0.1,
+      1000
+    );
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    camera.position.set(0, 6, 16);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.4);
+    directionalLight.position.set(10, 20, 10);
+    scene.add(directionalLight);
+
+    // Ground
+    const groundGeometry = new THREE.PlaneGeometry(40, 40);
+    const groundMaterial = new THREE.MeshStandardMaterial({
+      color: 0x7c5e3c
+    });
+
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    scene.add(ground);
+
+    // Crop group
+    const crops = [];
+    const cropGroup = new THREE.Group();
+
+    function createCrop(x, z) {
+      const stemGeometry = new THREE.CylinderGeometry(0.08, 0.12, 1.2, 8);
+      const stemMaterial = new THREE.MeshStandardMaterial({ color: 0x2f855a });
+      const stem = new THREE.Mesh(stemGeometry, stemMaterial);
+
+      stem.position.set(x, 0.6, z);
+
+      const leafGeometry = new THREE.ConeGeometry(0.45, 1.2, 8);
+      const leafMaterial = new THREE.MeshStandardMaterial({ color: 0x84cc16 });
+      const leaf = new THREE.Mesh(leafGeometry, leafMaterial);
+
+      leaf.position.y = 1.2;
+      stem.add(leaf);
+
+      stem.scale.y = 0.2;
+
+      cropGroup.add(stem);
+      crops.push(stem);
+    }
+
+    for (let x = -6; x <= 6; x += 2) {
+      for (let z = -6; z <= 6; z += 2) {
+        createCrop(x, z);
+      }
+    }
+
+    scene.add(cropGroup);
+
+    // Sky particles
+    const particleGeometry = new THREE.BufferGeometry();
+    const particleCount = 1000;
+
+    const positions = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 100;
+    }
+
+    particleGeometry.setAttribute(
+      'position',
+      new THREE.BufferAttribute(positions, 3)
+    );
+
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.05,
+      color: 0xffffff
+    });
+
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+
+    let growthFactor = 0.2;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      crops.forEach((crop, index) => {
+        crop.scale.y += (growthFactor - crop.scale.y) * 0.01;
+        crop.rotation.z = Math.sin(Date.now() * 0.001 + index) * 0.04;
+      });
+
+      cropGroup.rotation.y += 0.0015;
+      particles.rotation.y += 0.0008;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    document.getElementById('growthBtn').addEventListener('click', () => {
+      growthFactor += 0.3;
+
+      if (growthFactor > 2.4) {
+        growthFactor = 2.4;
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      growthFactor = 0.2;
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+  </script>
+</body>
+</html>
+

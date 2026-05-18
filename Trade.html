@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🌾 Specialized Trade - Innovative Dry Crops & Rare Spices Marketplace</title>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background: #f5f7fa;
+    color: #222;
+    transition: background 0.4s, color 0.4s;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav {
+    background: #2e7d32;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+  }
+
+  nav h2 {
+    user-select: none;
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+
+  nav button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .hero {
+    height: 80vh;
+    background:
+      linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+      url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80')
+      no-repeat center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    max-width: 700px;
+    user-select: none;
+    line-height: 1.2;
+    padding: 20px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    animation: floatHero 4s ease-in-out infinite;
+  }
+
+  @keyframes floatHero {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+    gap: 25px;
+  }
+
+  section {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(85, 135, 73, 0.18);
+    padding: 25px 28px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  section:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(67,160,71,0.25);
+  }
+
+  section h2 {
+    margin-bottom: 18px;
+    color: #2e7d32;
+    font-weight: 900;
+    font-size: 1.9rem;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .market-access {
+    padding: 16px 22px !important;
+    min-height: 120px;
+    justify-content: center;
+  }
+
+  .market-access p {
+    line-height: 1.6;
+    font-size: 0.98rem;
+  }
+
+  .horizontal-scroll {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  gap: 18px;
+  padding-right: 10px;
+  max-height: 650px;
+  scroll-behavior: smooth;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background: #66bb6a;
+  border-radius: 20px;
+}
+
+.horizontal-scroll .card {
+  width: 100%;
+  min-width: unset;
+  flex-shrink: 0;
+}
+
+  .card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(46, 125, 50, 0.15);
+    background: #f7fbe9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    position: relative;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.04) translateY(-4px);
+    box-shadow: 0 12px 28px rgba(46, 125, 50, 0.28);
+  }
+
+  .card img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .card:hover img {
+    transform: scale(1.08);
+  }
+
+  .card h3 {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #2e7d32;
+    padding: 12px 8px 8px 8px;
+    text-align: center;
+  }
+
+  .card button,
+  button.primary {
+    background: #43a047;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .card button:hover,
+  button.primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    border-radius: 8px;
+    border: 2px solid #a5d6a7;
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: 6px;
+  }
+
+  .price-card {
+    background: linear-gradient(135deg, #f1f8e9, #ffffff);
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 18px;
+    border: 2px solid #c5e1a5;
+    animation: fadePrice 0.4s ease;
+  }
+
+  .price-card h3 {
+    color: #2e7d32;
+    margin-bottom: 10px;
+  }
+
+  .price-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .price-box {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    flex: 1;
+    min-width: 120px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  }
+
+  .price-box span {
+    display: block;
+    margin-top: 5px;
+    font-weight: 700;
+    color: #2e7d32;
+  }
+
+  @keyframes fadePrice {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  p.result {
+    font-weight: 700;
+    margin-top: 16px;
+    color: #1b5e20;
+    min-height: 2em;
+  }
+
+  #notify {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #2e7d32;
+    color: white;
+    padding: 16px 28px;
+    border-radius: 20px;
+    display: none;
+    z-index: 1100;
+    animation: fadeSlide 0.4s ease;
+  }
+
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-weight: 600;
+    color: #567d46;
+  }
+
+  .dark {
+    background:#121212;
+    color:white;
+  }
+
+  .dark section,
+  .dark .card,
+  .dark .price-card,
+  .dark .price-box {
+    background:#1e1e1e;
+    color:white;
+  }
+
+  .dark nav {
+    background:#000;
+  }
+
+  .dark input,
+  .dark select,
+  .dark textarea {
+    background:#222;
+    color:#fff;
+  }
+
+  @media(max-width:768px){
+    .hero h1{
+      font-size:34px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<nav>
+  <h2>💰 Specialized Trade</h2>
+  <button id="themeToggleBtn">🌗</button>
+</nav>
+
+<div class="hero">
+  <h1>Buy & Sell Dry Crops & Rare Spices with 🌱 Direct Farmer Access</h1>
+</div>
+
+<main>
+
+<section class="market-access">
+  <h2>📦 Direct Market Access</h2>
+  <p>
+    Connecting farmers, buyers, and cooperatives for transparent transactions and better profits.
+  </p>
+</section>
+
+<section>
+  <h2>🌾 Dry Crops Marketplace</h2>
+  <div id="crops" class="horizontal-scroll"></div>
+</section>
+
+<section>
+  <h2>🌶️ Rare Spices Marketplace</h2>
+  <div id="spices" class="horizontal-scroll"></div>
+</section>
+
+<section>
+  <h2>📊 Real-Time Crop Pricing</h2>
+
+  <select id="cropSelect">
+    <option>Wheat</option>
+    <option>Rice</option>
+    <option>Millets</option>
+    <option>Turmeric</option>
+    <option>Cardamom</option>
+    <option>Black Pepper</option>
+  </select>
+
+  <select id="marketSelect">
+    <option>Delhi Azadpur Mandi</option>
+    <option>Mumbai APMC Market</option>
+    <option>Bangalore KR Market</option>
+    <option>Hyderabad Begum Bazaar</option>
+    <option>Chennai Koyambedu Market</option>
+    <option>Kolkata Posta Bazaar</option>
+    <option>Ahmedabad Jamalpur Market</option>
+    <option>Pune Market Yard</option>
+    <option>Lucknow Mandi</option>
+    <option>Jaipur Muhana Mandi</option>
+    <option>Indore Chhawani Market</option>
+    <option>Patna Mandi</option>
+    <option>Chandigarh Grain Market</option>
+    <option>Bhopal Krishi Upaj Mandi</option>
+    <option>Nagpur Cotton Market</option>
+    <option>Kanpur Grain Market</option>
+    <option>Surat Spice Market</option>
+    <option>Kochi Spice Market</option>
+    <option>Amritsar Grain Market</option>
+    <option>Varanasi Mandi</option>
+    <option>Guwahati Market</option>
+    <option>Raipur Krishi Bazaar</option>
+    <option>Bhubaneswar Market Yard</option>
+    <option>Ranchi Grain Market</option>
+    <option>Mysore Market</option>
+    <option>Nashik Onion Market</option>
+    <option>Madurai Market</option>
+    <option>Vijayawada Market Yard</option>
+    <option>Coimbatore Market</option>
+    <option>Agra Grain Market</option>
+  </select>
+
+  <button id="fetchPriceBtn" class="primary">
+    Get Latest Price
+  </button>
+
+  <div id="priceResult"></div>
+</section>
+
+<section>
+  <h2>📝 Sell Your Product</h2>
+
+  <form id="sellForm">
+
+    <input
+      id="pname"
+      placeholder="Product Name"
+      required>
+
+    <select id="ptype" required>
+      <option value="">-- Select Type --</option>
+      <option>Dry Crop</option>
+      <option>Rare Spice</option>
+    </select>
+
+    <input
+      id="pqty"
+      type="number"
+      placeholder="Quantity (kg)"
+      required>
+
+    <input
+      id="pprice"
+      type="number"
+      placeholder="Price (₹/kg)"
+      required>
+
+    <button type="submit" class="primary">
+      List Product
+    </button>
+
+  </form>
+</section>
+
+<section>
+  <h2>📚 Farming & Trade Insights</h2>
+
+  <p id="tipText">
+    Trade smarter with real-time insights and verified buyers.
+  </p>
+
+  <iframe
+    width="100%"
+    height="210"
+    src="https://www.youtube.com/embed/jbALHRWdmIo"
+    title="Featured video">
+  </iframe>
+</section>
+
+<section>
+  <h2>📈 Live Market Prices</h2>
+
+  <button
+    class="primary"
+    onclick="fetchLiveMarketPrices()">
+    Refresh Market Prices
+  </button>
+
+  <p id="livePriceResult" class="result"></p>
+</section>
+
+<section>
+  <h2>🤝 Smart Matching</h2>
+
+  <input
+    id="buyerLocation"
+    placeholder="Buyer Location">
+
+  <input
+    id="cropNeed"
+    placeholder="Crop Type">
+
+  <button
+    class="primary"
+    onclick="smartMatch()">
+    Find Match
+  </button>
+
+  <p id="matchResult" class="result"></p>
+</section>
+
+<section>
+  <h2>🔐 Secure Transactions</h2>
+
+  <input
+    id="payAmount"
+    placeholder="Amount ₹">
+
+  <button
+    class="primary"
+    onclick="securePay()">
+    Escrow Payment
+  </button>
+
+  <p id="paymentResult" class="result"></p>
+</section>
+
+<section>
+  <h2>🚚 Logistics Integration</h2>
+
+  <input
+    id="shipmentId"
+    placeholder="Shipment ID">
+
+  <button
+    class="primary"
+    onclick="trackLogistics()">
+    Track Shipment
+  </button>
+
+  <p id="shipmentResult" class="result"></p>
+</section>
+
+<section>
+  <h2>⭐ Trust Layer</h2>
+
+  <input
+    id="sellerName"
+    placeholder="Seller Name">
+
+  <input
+    id="sellerId"
+    placeholder="Seller ID">
+
+  <button
+    class="primary"
+    onclick="verifySeller()">
+    Verify Seller
+  </button>
+
+  <p id="trustResult" class="result"></p>
+</section>
+
+<section>
+  <h2>📊 Analytics</h2>
+
+  <button
+    class="primary"
+    onclick="showAnalytics()">
+    View Analytics
+  </button>
+
+  <p id="analyticsResult" class="result"></p>
+</section>
+
+</main>
+
+<div id="notify"></div>
+
+<footer>
+  &copy; 2026 Specialized Trade | Empowering Farmers & Buyers Directly 🌱
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+
+<script>
+
+const cropsData = [
+
+  {
+    name:'Wheat 🌾',
+    img:'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=400&q=80'
+  },
+
+  {
+    name:'Rice 🍚',
+    img:'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=400&q=80'
+  },
+
+  {
+    name:'Millets 🌱',
+    img:'https://plus.unsplash.com/premium_photo-1671130295829-23e2b49874a2?auto=format&fit=crop&w=400&q=80'
+  },
+
+  {
+    name:'Barley 🌾',
+    img:'https://images.unsplash.com/photo-1652170237097-0b188077c4b1?auto=format&fit=crop&w=400&q=80'
+  },
+
+  {
+    name:'Maize 🌽',
+    img:'https://images.unsplash.com/photo-1649251037465-72c9d378acb6?auto=format&fit=crop&w=400&q=80'
+  },
+
+  {
+    name:'Chickpeas 🫘',
+    img:'https://plus.unsplash.com/premium_photo-1675237625824-40a9c6400ad8?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Sorghum 🌾',
+    img:'https://images.unsplash.com/photo-1704627647734-61e38adedc4d?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Oats 🌾',
+    img:'https://plus.unsplash.com/premium_photo-1671130295244-b058fc8d86fe?'
+  },
+  {
+    name:'Rye 🌾',
+    img:'https://plus.unsplash.com/premium_photo-1669650270555-43e550f06551?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Quinoa 🌾',
+    img:'https://plus.unsplash.com/premium_photo-1705207702015-0c1f567a14df?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Buckwheat 🌾',
+    img:'https://images.unsplash.com/photo-1719060038791-012d4a471d91?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Lentils 🌾',
+    img:'https://plus.unsplash.com/premium_photo-1671130295987-13d3b3b4e9dc?'
+  },
+  {
+    name:'Soybeans 🌾',
+    img:'https://images.unsplash.com/photo-1639843606783-b2f9c50a7468?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Peanuts 🌾',
+    img:'https://images.unsplash.com/photo-1524594345772-c953a3ae53e8?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Mustard Seeds 🌾',
+    img:'https://images.unsplash.com/photo-1701188543419-f2e932565056?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Sesame 🌾',
+    img:'https://plus.unsplash.com/premium_photo-1674654419404-667fcdd0fe13?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Flaxseed 🌾',
+    img:'https://plus.unsplash.com/premium_photo-1726072357487-d5f62862a220?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Sunflower Seeds 🌾',
+    img:'https://images.unsplash.com/photo-1613500788522-89c4d55bdd0e?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Pigeon Pea 🌾',
+    img:'https://images.unsplash.com/photo-1605402966404-ec40b9bd5009?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Green Gram 🌾',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLgP3naU7Jo5uxcNIVYX1f03Nl4yj1kzQuJRzGykd6iPlCPCgKtqto1_XrmNmwz3DgL-M1YnnP6XHktmLZOB0P6UFYZNOdGMhyGlfVHQ&s=1000'
+  },
+  {
+    name:'Black Gram 🌾',
+    img:'https://plus.unsplash.com/premium_photo-1675237625091-e40de414b510?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Kidney Beans 🌾',
+    img:'https://images.unsplash.com/photo-1513868853742-e7fb786265db?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Cowpeas 🌾',
+    img:'https://plus.unsplash.com/premium_photo-1671130295735-25af5e78d40c?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Foxtail Millet 🌾',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVL8jLTgZx2itBxiJRwX1ZhVcQwUIyIz2miedNPc8-lmRtl3c7iybCOWgszfeMVbSHquYKvqKHHJ8AN7utx01XZ9lwM38_IBGOK7Rzum8&s=1000'
+  },
+  {
+    name:'Pearl Millet 🌾',
+    img:'https://ooofarms.com/cdn/shop/products/Pearl1_wholemillet.jpg?v=1689334418'
+  },
+  {
+    name:'Finger Millet 🌾',
+    img:'https://images.unsplash.com/photo-1653580524515-77b19c176b88?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Amaranth 🌾',
+    img:'https://naturallyyours.in/cdn/shop/articles/amaranth1.jpg?v=1689334418'
+  },
+  {
+    name:'Teff 🌾',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8cFy_7N48_1vRXVOYeAC650sfxRG_88fdbusM78E5HqUeBPmEjR5vi2aR2V7oOyca3SOIrwSIQBMooKk6ysAmYtg_w2EpuXPy45AS9sc&s=1000'
+  },
+  {
+    name:'Canola 🌾',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmgVO3dOesjTsdHGpVqQz5EOTwL6QI7tIjrDpqRwA47-XLvtxFJcjO1gOkj95ncu2wJyvfQaEtml0H12PDP0-P0TieIBM8BJuf21blzEs&s=1000'
+  },
+  {
+    name:'Dry Peas 🌾',
+    img:'https://images.unsplash.com/photo-1601993488142-d3050a16478d?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Moth Beans 🌾',
+    img:'https://www.aranyapurefood.com/cdn/shop/files/WhatsAppImage2024-03-27at10.19.02AM.jpg?v=1711515146'
+  },
+  {
+    name:'Adzuki Beans 🌾',
+    img:'https://images.unsplash.com/photo-1613758235402-745466bb7efe?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Navy Beans 🌾',
+    img:'https://plus.unsplash.com/premium_photo-1664527307810-63c15cb57346?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Pinto Beans 🌾',
+    img:'https://images.unsplash.com/photo-1612504258838-fbf14fe4437d?auto=format&fit=crop&w=400&q=80'
+  }
+
+];
+
+const spicesData = [
+
+  {
+    name:'Turmeric 🌿',
+    img:'https://images.unsplash.com/photo-1606951444141-e5533feb55be?auto=format&fit=crop&w=400&q=80'
+  },
+
+  {
+    name:'Cardamom 🌱',
+    img:'https://images.unsplash.com/photo-1622824497447-b284a5493027?auto=format&fit=crop&w=400&q=80'
+  },
+
+  {
+    name:'Black Pepper 🌶️',
+    img:'https://images.unsplash.com/photo-1591801058986-9e28e68670f7?auto=format&fit=crop&w=400&q=80'
+  },
+
+  {
+    name:'Saffron 🌸',
+    img:'https://images.unsplash.com/photo-1643471672168-f4a4b6cfa440?auto=format&fit=crop&w=400&q=80'
+  },
+
+  {
+    name:'Cinnamon 🍂',
+    img:'https://images.unsplash.com/photo-1636972955024-3b01f2236b01?auto=format&fit=crop&w=400&q=80'
+  },
+  {
+    name:'Nutmeg 🌶️',
+    img:'https://cdn.britannica.com/77/170777-050-3A754B3D/Nutmeg-seeds-ground-spice.jpg'
+  },
+  {
+    name:'Mace 🌶️',
+    img:'https://cookingmasala.com/wp-content/uploads/2020/12/il_fullxfull.2756263467_fsbh.jpg'
+  },
+  {
+    name:'Cloves 🌶️',
+    img:'https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/fro/fro00293/y/18.jpg'
+  },
+  {
+    name:'Star Anise 🌶️',
+    img:'https://m.media-amazon.com/images/I/91zVJo3vtwL.jpg'
+  },
+  {
+    name:'Fennel 🌶️',
+    img:'https://rukminim2.flixcart.com/image/480/640/k6wiefk0/plant-seed/s/a/g/250-ur-fennelseed-250gms-urban-organic-original-imafp8uym4a5yznn.jpeg?q=90'
+  },
+  {
+    name:'Fenugreek 🌶️',
+    img:'https://cdn1.healthians.com/blog/wp-content/uploads/2025/12/Fenugreek-Seeds-benefits-for-Health.webp'
+  },
+  {
+    name:'Cumin 🌶️',
+    img:'https://satopradhan.com/cdn/shop/products/jeera-sabut-cumin-seeds-150g-natural-and-purely-organic-without-adulteration-satopradhan-1-20269176488086_1200x1200.jpg?v=1696574810'
+  },
+  {
+    name:'Coriander 🌶️',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7MfEdIRotfchZFQxXWHG491V4aAvOkW7kZg&s=1000'
+  },
+  {
+    name:'Paprika 🌶️',
+    img:'https://www.chilipeppermadness.com/wp-content/uploads/2025/10/Paprika-Peppers1.jpg'
+  },
+  {
+    name:'Sumac 🌶️',
+    img:'https://media.post.rvohealth.io/wp-content/uploads/2020/11/sumac-732x549-thumbnail-732x549.jpg'
+  },
+  {
+    name:'Allspice 🌶️',
+    img:'https://media.post.rvohealth.io/wp-content/uploads/2021/09/allspice-732x549-thumbnail.jpg'
+  },
+  {
+    name:'Juniper Berry 🌶️',
+    img:'https://www.todaysdietitian.com/wp-content/uploads/2024/10/Herbs_1399001517.webp'
+  },
+  {
+    name:'Galangal 🌶️',
+    img:'https://post.healthline.com/wp-content/uploads/2019/11/galangal-root-1296x728-header-1296x728.jpg'
+  },
+  {
+    name:'Tamarind 🌶️',
+    img:'https://www.tasteofhome.com/wp-content/uploads/2019/10/tamarind-peel-shutterstock_1139167793.jpg?fit=1024,640'
+  },
+  {
+    name:'Ajwain 🌶️',
+    img:'https://www.indianasapplepie.com/cdn/shop/articles/IMG-1246_1_7a29cb04-6c1d-4529-9292-0f6b264d61a0_2000x.jpg?v=1772937962'
+  },
+  {
+    name:'Nigella 🌶️',
+    img:'https://i0.wp.com/post.healthline.com/wp-content/uploads/2022/03/black-cumin-1296-728-header.jpg?w=1155&h=1528https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7MfEdIRotfchZFQxXWHG491V4aAvOkW7kZg&s=1000'
+  },
+  {
+    name:'Anardana 🌶️',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTWxTjh2MNve36xQuX0gnJRSmGhNLyntbSCg&s=1000'
+  },
+  {
+    name:'Kokum 🌶️',
+    img:'https://5.imimg.com/data5/SELLER/Default/2025/1/479573288/XI/EG/XQ/64426473/kokum-seeds-garcinia-indica-seed.png'
+  },
+  {
+    name:'Long Pepper 🌶️',
+    img:'https://mangalorespice.com/cdn/shop/files/Long_Pepper_Pippali_Mangalore_Spice.jpg?v=1734791281'
+  },
+  {
+    name:'White Pepper 🌶️',
+    img:'https://mangalorespice.com/cdn/shop/files/White_Pepper_Safed_Mirchi_Mangalore_Spice.jpg?v=1734799174'
+  },
+  {
+    name:'Pink Pepper 🌶️',
+    img:'https://tastecooking.com/wp-content/uploads/2019/05/shutterstock_372471073.jpg'
+  },
+  {
+    name:'Szechuan Pepper 🌶️',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE77w4s0imCwRP70h6STMPq0RUPSmZocQH8A&s=1000'
+  },
+  {
+    name:'Vanilla 🌶️',
+    img:'https://thespicesonline.com/wp-content/uploads/2020/07/Vanilla-Beans.jpg'
+  },
+  {
+    name:'Bay Leaf 🌶️',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtgEThIf3xCwbmi9Zp-8TShveI4Tu4yUwtLw&s=1000'
+  },
+  {
+    name:'Dill Seed 🌶️',
+    img:'https://m.media-amazon.com/images/I/514xA73HVyL.jpg'
+  },
+  {
+    name:'Celery Seed 🌶️',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiA6LZOHFI_pacJHXoMzbwkn6vskfuELSARg&s=1000'
+  },
+  {
+    name:'Asafoetida 🌶️',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyrLOC_YAhtu6HVBipC7KFLW4frLnkzRJ7Bw&s=1000'
+  },
+  {
+    name:'Cassia 🌶️',
+    img:'https://cdn.britannica.com/07/123107-050-1520881F/bark-Cinnamomum-cassia-plant-spice.jpg'
+  }
+
+];
+
+const marketPrices = {
+  Wheat: {
+    price: '₹2,480 / quintal',
+    trend: '+4%',
+    demand: 'High'
+  },
+  Rice: {
+    price: '₹3,150 / quintal',
+    trend: '+2%',
+    demand: 'Very High'
+  },
+  Millets: {
+    price: '₹2,920 / quintal',
+    trend: '+5%',
+    demand: 'Growing'
+  },
+  Turmeric: {
+    price: '₹8,100 / quintal',
+    trend: '+8%',
+    demand: 'High'
+  },
+  Cardamom: {
+    price: '₹14,300 / quintal',
+    trend: '+3%',
+    demand: 'Premium'
+  },
+  'Black Pepper': {
+    price: '₹6,900 / quintal',
+    trend: '+6%',
+    demand: 'Strong'
+  }
+};
+
+function showNotification(message){
+
+  const n=document.getElementById('notify');
+
+  n.textContent=message;
+
+  n.style.display='block';
+
+  setTimeout(()=>n.style.display='none',3000);
+}
+
+function loadMarketplace(){
+
+  document.getElementById('crops').innerHTML =
+
+  cropsData.map(c => `
+
+    <article class='card'>
+
+      <img src='${c.img}'>
+
+      <h3>${c.name}</h3>
+
+      <button onclick="showNotification('Buy ${c.name}')">
+        Buy
+      </button>
+
+      <button onclick="showNotification('Sell ${c.name}')">
+        Sell
+      </button>
+
+    </article>
+
+  `).join('');
+
+  document.getElementById('spices').innerHTML =
+
+  spicesData.map(s => `
+
+    <article class='card'>
+
+      <img src='${s.img}'>
+
+      <h3>${s.name}</h3>
+
+      <button onclick="showNotification('Buy ${s.name}')">
+        Buy
+      </button>
+
+      <button onclick="showNotification('Sell ${s.name}')">
+        Sell
+      </button>
+
+    </article>
+
+  `).join('');
+}
+
+loadMarketplace();
+
+document.getElementById('fetchPriceBtn').onclick = () => {
+
+  const crop = document.getElementById('cropSelect').value;
+  const selectedMarket = document.getElementById('marketSelect').value;
+
+  const data = marketPrices[crop];
+
+  document.getElementById('priceResult').innerHTML = `
+
+    <div class="price-card">
+
+      <h3>${crop} Market Insights</h3>
+
+      <div class="price-details">
+
+        <div class="price-box">
+          Market
+          <span>${selectedMarket}</span>
+        </div>
+
+        <div class="price-box">
+          Current Price
+          <span>${data.price}</span>
+        </div>
+
+        <div class="price-box">
+          Trend
+          <span>${data.trend}</span>
+        </div>
+
+        <div class="price-box">
+          Demand
+          <span>${data.demand}</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+  showNotification(`${crop} prices updated`);
+};
+
+document.getElementById('sellForm')
+.addEventListener('submit',e=>{
+
+  e.preventDefault();
+
+  showNotification('Product listed successfully');
+
+  e.target.reset();
+});
+
+function fetchLiveMarketPrices(){
+
+  livePriceResult.textContent =
+  'Government API synced: rates updated';
+
+  showNotification('Live prices refreshed');
+}
+
+function smartMatch(){
+
+  matchResult.textContent =
+  `Best buyer near ${buyerLocation.value} for ${cropNeed.value}`;
+
+  showNotification('AI match completed');
+}
+
+function securePay(){
+
+  paymentResult.textContent =
+  `₹${payAmount.value} secured in escrow`;
+
+  showNotification('Secure payment started');
+}
+
+function trackLogistics(){
+
+  shipmentResult.textContent =
+  `Shipment ${shipmentId.value}: In Transit 🚚`;
+
+  showNotification('Tracking updated');
+}
+
+function verifySeller(){
+
+  const seller = document.getElementById('sellerName').value;
+  const sellerId = document.getElementById('sellerId').value;
+
+  trustResult.textContent =
+  `${seller} | ID: ${sellerId} verified seller ✓`;
+
+  showNotification('Seller verified');
+}
+
+function showAnalytics(){
+
+  analyticsResult.textContent =
+  'Trade history loaded | Profit +18% | Seasonal demand high';
+
+  showNotification('Analytics loaded');
+}
+
+document.getElementById('themeToggleBtn').onclick = () =>
+document.body.classList.toggle('dark');
+
+const lenis = new Lenis({
+  duration: 1.2,
+  smoothWheel: true,
+  smoothTouch: false,
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
+
+</script>
+
+</body>
+</html>

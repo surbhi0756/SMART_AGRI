@@ -1,0 +1,286 @@
+/* ------------------------------
+   GLOBAL STYLING
+------------------------------ */
+
+body {
+
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    background-image: url('Images/sibillini-national-3840x2160-21129.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: white;
+}
+
+/* ------------------------------
+   FIXED NAVBAR
+------------------------------ */
+
+.navbar {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 40px;
+
+    background: rgba(0,0,0,0.55);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    z-index: 1000;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* Logo */
+
+.logo-section h1 {
+
+    margin: 0;
+    font-size: 28px;
+}
+
+.logo-section p {
+
+    margin-top: 5px;
+    font-size: 14px;
+
+    color: #d7ffd9;
+}
+
+/* Navigation */
+
+.nav-links {
+
+    display: flex;
+    gap: 25px;
+
+    margin-right: 70px;
+}
+
+.nav-links a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+
+    color: #8cff95;
+}
+
+/* ------------------------------
+   GRID LAYOUT
+------------------------------ */
+
+.container {
+
+    width: 90%;
+
+    margin: 140px auto 40px auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 45px;
+}
+
+/* ------------------------------
+   GLASS CARDS
+------------------------------ */
+
+.card {
+
+    background: rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    border-left: 5px solid #4caf50;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+
+    transition: 0.3s ease;
+}
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 12px 24px rgba(0,0,0,0.45);
+}
+
+/* ------------------------------
+   CUSTOM CARD SIZES
+------------------------------ */
+
+/* Achievements */
+
+.card:nth-child(1) {
+
+    height: 170px;
+}
+
+/* Certifications */
+
+.card:nth-child(2) {
+
+    height: 170px;
+}
+
+/* Community Reputation */
+
+.card:nth-child(3) {
+
+    height: 230px;
+}
+
+/* Reputation Summary */
+
+.card:nth-child(4) {
+
+    height: 230px;
+}
+
+/* Share Profile */
+/* Share Profile */
+
+.card:nth-child(5) {
+    grid-column: 1 / 3;
+    
+    height: 180px;
+}
+/* ------------------------------
+   HEADINGS
+------------------------------ */
+
+h2 {
+
+    color: #8cff95;
+
+    margin-top: 0;
+}
+
+/* ------------------------------
+   INPUTS
+------------------------------ */
+
+input[type="text"],
+input[type="range"],
+select {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    margin-top: 8px;
+    margin-bottom: 15px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    background: rgba(255,255,255,0.9);
+}
+
+/* Buttons */
+
+button {
+
+    padding: 10px 20px;
+
+    background: #388e3c;
+
+    color: white;
+
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+button:hover {
+
+    background: #2e7d32;
+
+    transform: scale(1.03);
+}
+
+/* ------------------------------
+   LIST ITEMS
+------------------------------ */
+
+ul {
+
+    list-style: none;
+
+    padding: 0;
+}
+
+li {
+
+    background: rgba(255,255,255,0.85);
+
+    color: black;
+
+    padding: 10px;
+
+    margin-bottom: 10px;
+
+    border-radius: 5px;
+}
+
+/* ------------------------------
+   SUMMARY BOX
+------------------------------ */
+
+#summaryBox {
+
+    background: rgba(0,0,0,0.6);
+
+    padding: 15px;
+
+    border-radius: 8px;
+}
+
+/* Results */
+
+#reputationResult,
+#visibilityResult {
+
+    margin-top: 15px;
+
+    font-weight: bold;
+
+    color: #8cff95;
+}

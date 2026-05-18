@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements & Reputation</title>
+    <link rel="stylesheet" href="achievements.css">
+</head>
+<body>
+
+<header class="navbar">
+
+    <div class="logo-section">
+        <h1>🏆 Achievements & Reputation</h1>
+        <p>Showcase certifications, milestones & reputation</p>
+    </div>
+
+    <nav class="nav-links">
+        <a href="profile.html">Profile</a>
+        <a href="personal_dashboard.html">Dashboard</a>
+        <a href="#">Achievements</a>
+    </nav>
+
+</header>
+
+<div class="container">
+   
+    <!-- Achievements Section -->
+    <div class="card">
+        <h2>🌾 Farming Achievements</h2>
+
+        <label>Enter Achievement:</label>
+        <input type="text" id="achievementInput"
+               placeholder="Example: Best Organic Farmer 2026">
+
+        <button onclick="addAchievement()">
+            Add Achievement
+        </button>
+
+        <ul id="achievementList"></ul>
+    </div>
+
+    <!-- Certifications -->
+    <div class="card">
+        <h2>📜 Certifications</h2>
+
+        <label>Certification Name:</label>
+        <input type="text" id="certificateInput"
+               placeholder="Example: Organic Farming Certificate">
+
+        <button onclick="addCertificate()">
+            Add Certification
+        </button>
+
+        <ul id="certificateList"></ul>
+    </div>
+
+    <!-- Community Reputation -->
+    <div class="card">
+        <h2>⭐ Community Reputation</h2>
+
+        <label>Community Rating:</label>
+        <input type="range" id="ratingSlider"
+               min="1" max="5" value="3">
+
+        <p id="ratingValue">Rating: 3 ⭐</p>
+
+        <button onclick="saveRating()">
+            Save Reputation Score
+        </button>
+
+        <div id="reputationResult"></div>
+    </div>
+
+    <!-- Summary -->
+    <div class="card">
+        <h2>📊 Reputation Summary</h2>
+
+        <div id="summaryBox">
+            <p>No reputation data available.</p>
+        </div>
+    </div>
+
+
+
+<!--Option to share profile with buyers or cooperatives.-->
+
+<!-- Share Profile -->
+<div class="card">
+    <h2>📤 Share Farmer Profile</h2>
+
+    <label>Select Profile Visibility:</label>
+
+    <select id="profileVisibility">
+        <option value="private">Private</option>
+        <option value="buyers">Share with Buyers</option>
+        <option value="cooperatives">Share with Cooperatives</option>
+        <option value="public">Public Profile</option>
+    </select>
+
+    <button onclick="saveVisibility()">
+        Save Visibility
+    </button>
+
+    <div id="visibilityResult"></div>
+</div></div>
+<script src="achievements.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forum</title>
+    <link rel="stylesheet" href="community.css">
+</head>
+<body>
+
+<header class="navbar">
+
+    <div class="logo-section">
+        <h1>🌾 Community Forum & Knowledge Exchange</h1>
+        <p>Learn, share innovations & grow together</p>
+    </div>
+
+    <nav class="nav-links">
+        <a href="support.html">Support</a>
+        <a href="#">Community</a>
+        <a href="#">Discussions</a>
+        <a href="#">Innovations</a>
+    </nav>
+
+</header>
+
+<div class="container">
+
+    <!-- Peer-to-Peer Q&A -->
+    <div class="card">
+        <h2>❓ Peer-to-Peer Q&A</h2>
+
+        <input type="text" id="questionInput"
+               placeholder="Ask your farming question">
+
+        <button onclick="addQuestion()">
+            Post Question
+        </button>
+
+        <div id="questionList"></div>
+    </div>
+
+    <!-- Success Stories -->
+    <div class="card">
+        <h2>🏆 Success Stories</h2>
+
+        <input type="text" id="storyTitle"
+               placeholder="Success story title">
+
+        <textarea id="storyMessage"
+                  placeholder="Share your farming success"></textarea>
+
+        <button onclick="addStory()">
+            Share Story
+        </button>
+
+        <div id="storyList"></div>
+    </div>
+
+    <!-- Innovation Sharing -->
+    <div class="card">
+        <h2>💡 Innovation Sharing</h2>
+
+        <input type="text" id="innovationTitle"
+               placeholder="Innovation title">
+
+        <textarea id="innovationMessage"
+                  placeholder="Describe your new farming idea"></textarea>
+
+        <button onclick="addInnovation()">
+            Share Innovation
+        </button>
+
+        <div id="innovationList"></div>
+    </div>
+
+
+<!-- Crop-Specific Discussion Boards -->
+<div class="card">
+    <h2>🌾 Crop-Specific Discussion Boards</h2>
+
+    <label>Select Crop Topic:</label>
+    <select id="cropTopic">
+        <option value="Wheat">Wheat</option>
+        <option value="Rice">Rice</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Rare Spices">Rare Spices</option>
+    </select>
+
+    <textarea id="discussionMessage"
+              placeholder="Share crop-specific advice or discussion"></textarea>
+
+    <button onclick="addDiscussion()">
+        Post Discussion
+    </button>
+
+    <div id="discussionBoard"></div>
+</div>
+
+<!-- Gamified Badges -->
+<div class="card">
+    <h2>🏅 Contributor Badges</h2>
+
+    <label>Contributor Name:</label>
+    <input type="text" id="badgeUser"
+           placeholder="Enter farmer name">
+
+    <label>Select Contribution Type:</label>
+    <select id="badgeType">
+        <option value="helper">Helpful Answers</option>
+        <option value="innovator">Innovation Sharing</option>
+        <option value="mentor">Community Mentor</option>
+        <option value="expert">Crop Expert</option>
+    </select>
+
+    <button onclick="assignBadge()">
+        Award Badge
+    </button>
+
+    <div id="badgeBoard"></div>
+</div>
+</div>
+
+<script src="community.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+    <header class="navbar">
+
+    <div class="logo-section">
+        <h1>👨‍🌾 Farmer Profile</h1>
+        <p>Manage your farming information & achievements</p>
+    </div>
+
+    <nav class="nav-links">
+        <a href="personal_dashboard.html">Dashboard</a>
+        <a href="achievements.html">Achievements</a>
+        <a href="#">Profile</a>
+    </nav>
+
+</header>
+
+    <div class="container">
+
+        <!-- Profile Card -->
+        <div class="card">
+            <h2>📋 Personal Information</h2>
+
+            <label>Farmer Name:</label>
+            <input type="text" id="farmerName" placeholder="Enter your name">
+
+            <label>Village / Location:</label>
+            <input type="text" id="location" placeholder="Enter village name">
+
+            <label>Farm Size (Acres):</label>
+            <input type="number" id="farmSize" placeholder="Enter farm size">
+
+            <label>Main Crop:</label>
+            <select id="mainCrop">
+                <option>Wheat</option>
+                <option>Rice</option>
+                <option>Vegetables</option>
+                <option>Fruits</option>
+                <option>Rare Spices</option>
+            </select>
+
+            <button onclick="saveProfile()">Save Profile</button>
+        </div>
+
+        <!-- Profile Summary -->
+        <div class="card">
+            <h2>🌾 Farmer Summary</h2>
+
+            <div id="profileSummary">
+                <p>No profile data saved yet.</p>
+            </div>
+        </div>
+
+        <!-- Achievement Section -->
+        <div class="card">
+            <h2>🏆 Farming Achievements</h2>
+
+            <ul id="achievementList">
+                <li>🌱 Started Smart Farming Journey</li>
+            </ul>
+
+            <button onclick="addAchievement()">
+                Add New Achievement
+            </button>
+        </div>
+
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

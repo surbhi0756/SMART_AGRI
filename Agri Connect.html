@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AgriConnect Smart Agriculture Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--primary:#2E7D32;
+--secondary:#66BB6A;
+--accent:#F9A825;
+--bg:#F4F7F2;
+--dark:#1F2937;
+--light:#ffffff;
+--border:#DDE5DB;
+--muted:#6B7280;
+--shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--dark);
+line-height:1.6;
+}
+html{scroll-behavior:smooth;}
+header{
+background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.7)),url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1800&q=80');
+background-size:cover;
+background-position:center;
+min-height:100vh;
+color:white;
+display:flex;
+flex-direction:column;
+}
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:22px 8%;
+background:rgba(0,0,0,0.2);
+backdrop-filter:blur(8px);
+position:sticky;
+top:0;
+z-index:1000;
+}
+.logo{
+font-size:1.8rem;
+font-weight:700;
+color:#D7FFD8;
+}
+.nav-links{
+display:flex;
+gap:28px;
+}
+.nav-links a{
+text-decoration:none;
+color:white;
+font-weight:500;
+}
+.hero{
+flex:1;
+display:flex;
+align-items:center;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:40px;
+padding:80px 8%;
+}
+.hero-text{
+flex:1;
+min-width:320px;
+}
+.hero-text h1{
+font-size:3.5rem;
+line-height:1.2;
+margin-bottom:24px;
+}
+.hero-text p{
+max-width:700px;
+margin-bottom:28px;
+color:#E5E7EB;
+}
+.hero-buttons{
+display:flex;
+gap:16px;
+flex-wrap:wrap;
+}
+.btn{
+padding:14px 24px;
+border:none;
+border-radius:12px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+.btn-primary{
+background:var(--primary);
+color:white;
+}
+.btn-primary:hover{
+background:#256D2C;
+transform:translateY(-2px);
+}
+.btn-secondary{
+background:white;
+color:var(--dark);
+}
+.hero-card{
+width:360px;
+background:rgba(255,255,255,0.12);
+padding:28px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.2);
+}
+.alert{
+background:rgba(255,255,255,0.1);
+padding:14px;
+border-left:4px solid var(--accent);
+border-radius:12px;
+margin-bottom:14px;
+}
+section{padding:90px 8%;}
+.section-title{text-align:center;margin-bottom:45px;}
+.section-title h2{font-size:2.5rem;margin-bottom:10px;}
+.section-title p{max-width:760px;margin:auto;color:var(--muted);}
+.control-panel{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:var(--shadow);
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:18px;
+margin-bottom:35px;
+}
+.field{display:flex;flex-direction:column;}
+.field label{margin-bottom:8px;font-weight:600;}
+.field select{
+padding:14px;
+border-radius:12px;
+border:1px solid var(--border);
+background:#F9FAFB;
+}
+.dashboard{
+display:none;
+grid-template-columns:1.2fr 1fr;
+gap:24px;
+margin-top:30px;
+}
+.card{
+background:white;
+padding:24px;
+border-radius:20px;
+box-shadow:var(--shadow);
+}
+.weather-top,.top-flex{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+.live-badge,.risk{
+background:#E8F5E9;
+color:var(--primary);
+padding:8px 14px;
+border-radius:30px;
+font-size:0.8rem;
+font-weight:700;
+}
+.weather-main{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:25px 0;
+}
+.temp h1{
+font-size:4rem;
+color:var(--primary);
+}
+.weather-icon{font-size:5rem;}
+.weather-stats{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+}
+.stat{
+background:#F5F7F4;
+padding:16px;
+border-radius:12px;
+}
+.stat span{
+display:block;
+font-size:0.9rem;
+color:var(--muted);
+margin-bottom:4px;
+}
+.forecast{
+display:flex;
+gap:12px;
+overflow-x:auto;
+margin-top:24px;
+}
+.forecast-day{
+min-width:90px;
+text-align:center;
+padding:14px;
+background:#F5F7F4;
+border-radius:12px;
+}
+.forecast-day.active{
+background:var(--primary);
+color:white;
+}
+.recommendation{
+background:#F8FAF7;
+padding:16px;
+border-radius:14px;
+margin-bottom:16px;
+}
+.recommendation h4{
+margin-bottom:8px;
+color:var(--primary);
+}
+.features-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:24px;
+margin-top:30px;
+}
+.feature-card{
+background:white;
+padding:28px;
+border-radius:20px;
+box-shadow:var(--shadow);
+}
+.tag{
+display:inline-block;
+padding:6px 12px;
+background:#E8F5E9;
+color:var(--primary);
+border-radius:30px;
+font-size:0.85rem;
+margin-bottom:16px;
+font-weight:600;
+}
+.source-box{
+background:#FFF8E1;
+padding:20px;
+border-left:4px solid var(--accent);
+border-radius:14px;
+margin-top:40px;
+}
+footer{
+background:#17212B;
+color:#CBD5E1;
+padding:60px 8%;
+margin-top:80px;
+}
+.footer-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:30px;
+}
+@media(max-width:950px){
+.dashboard{grid-template-columns:1fr;}
+.hero-text h1{font-size:2.5rem;}
+nav{flex-direction:column;gap:14px;}
+}
+</style>
+</head>
+<body>
+<header>
+<nav>
+<div class="logo">AgriConnect</div>
+<div class="nav-links">
+<a href="#advisory">Advisory</a>
+<a href="#schemes">Schemes</a>
+<a href="#resources">Resources</a>
+</div>
+</nav>
+<div class="hero">
+<div class="hero-text">
+<h1>Smart Agriculture Intelligence Platform</h1>
+<p>Interactive AI-powered crop advisory, live weather intelligence, seasonal planning, and government scheme guidance for farmers and agricultural professionals across India.</p>
+<div class="hero-buttons">
+<button class="btn btn-primary">Explore Advisory</button>
+<button class="btn btn-secondary">Government Schemes</button>
+</div>
+</div>
+<div class="hero-card">
+<h3>Live Agricultural Alerts</h3>
+<div class="alert">🌧️ Rainfall expected across Northern India.</div>
+<div class="alert">☀️ Heatwave warning in Rajasthan and Gujarat.</div>
+<div class="alert">🌾 Irrigation advisory updated for wheat farmers.</div>
+</div>
+</div>
+</header>
+<section id="advisory">
+<div class="section-title">
+<h2>Interactive Weather & Crop Advisory</h2>
+<p>Select your state, city, and crop to generate personalized farming recommendations.</p>
+</div>
+<div class="control-panel">
+<div class="field">
+<label>Select State</label>
+<select id="stateSelect"></select>
+</div>
+<div class="field">
+<label>Select City</label>
+<select id="citySelect"></select>
+</div>
+<div class="field">
+<label>Select Crop</label>
+<select id="cropSelect">
+<option>Wheat</option>
+<option>Rice</option>
+<option>Maize</option>
+<option>Cotton</option>
+<option>Sugarcane</option>
+<option>Mustard</option>
+<option>Potato</option>
+<option>Tomato</option>
+<option>Onion</option>
+<option>Soybean</option>
+<option>Groundnut</option>
+<option>Millets</option>
+<option>Banana</option>
+<option>Mango</option>
+<option>Tea</option>
+<option>Coffee</option>
+</select>
+</div>
+<button class="btn btn-primary" id="generateBtn">Generate Advisory</button>
+</div>
+<div class="dashboard" id="dashboard">
+<div class="card">
+<div class="weather-top">
+<div>
+<h3 id="locationName">Gurgaon, Haryana</h3>
+<p>Agricultural Weather Intelligence</p>
+</div>
+<div class="live-badge">LIVE</div>
+</div>
+<div class="weather-main">
+<div class="temp">
+<h1 id="tempValue">39°C</h1>
+<p id="conditionValue">Sunny & Dry</p>
+</div>
+<div class="weather-icon">☀️</div>
+</div>
+<div class="weather-stats">
+<div class="stat"><span>Humidity</span><strong id="humidityValue">60%</strong></div>
+<div class="stat"><span>Wind Speed</span><strong id="windValue">15 km/h</strong></div>
+<div class="stat"><span>Rain Probability</span><strong id="rainValue">40%</strong></div>
+<div class="stat"><span>Soil Moisture</span><strong id="soilValue">Moderate</strong></div>
+</div>
+<div class="forecast">
+<div class="forecast-day active"><strong>Today</strong><p>39°</p>☀️</div>
+<div class="forecast-day"><strong>Fri</strong><p>40°</p>🌤️</div>
+<div class="forecast-day"><strong>Sat</strong><p>37°</p>🌧️</div>
+<div class="forecast-day"><strong>Sun</strong><p>35°</p>🌦️</div>
+</div>
+</div>
+<div class="card">
+<div class="top-flex">
+<div>
+<h3>AI Crop Advisory</h3>
+<p>Personalized crop intelligence</p>
+</div>
+<div class="risk">Medium Risk</div>
+</div>
+<div id="advisoryContent"></div>
+</div>
+</div>
+</section>
+<section id="schemes">
+<div class="section-title">
+<h2>Government Schemes & Smart Farming Hub</h2>
+<p>Interactive agricultural schemes, subsidies, seasonal planning, and live farming insights.</p>
+</div>
+<div class="features-grid" style="align-items:start;grid-template-columns:1.2fr 260px;gap:20px;">
+<div class="feature-card">
+<div class="tag">Government Support</div>
+<h3>Government Agriculture Eligibility Checker</h3>
+<p>Check your eligibility for agricultural schemes, subsidies, insurance, and smart farming programs.</p>
+
+<div class="field">
+<label>Farmer Name</label>
+<input type="text" id="farmerName" placeholder="Enter farmer name" style="padding:14px;border-radius:12px;border:1px solid var(--border);background:#F9FAFB;">
+</div>
+
+<br>
+
+<div class="field">
+<label>Select Farmer Type</label>
+<select id="farmerType">
+<option>Small Farmer</option>
+<option>Marginal Farmer</option>
+<option>Commercial Farmer</option>
+<option>Organic Farmer</option>
+<option>Dairy Farmer</option>
+</select>
+</div>
+
+<br>
+
+<div class="field">
+<label>Select Farm Size</label>
+<select id="farmSize">
+<option>Below 1 Acre</option>
+<option>1 - 3 Acres</option>
+<option>3 - 5 Acres</option>
+<option>5 - 10 Acres</option>
+<option>10+ Acres</option>
+</select>
+</div>
+
+<br>
+
+<div class="field">
+<label>Select Primary Crop</label>
+<select id="primaryCrop">
+<option>Wheat</option>
+<option>Rice</option>
+<option>Cotton</option>
+<option>Sugarcane</option>
+<option>Maize</option>
+<option>Mustard</option>
+<option>Potato</option>
+<option>Tomato</option>
+<option>Tea</option>
+<option>Coffee</option>
+<option>Millets</option>
+<option>Soybean</option>
+<option>Groundnut</option>
+</select>
+</div>
+
+<br>
+
+<button class="btn btn-primary" onclick="checkEligibility()">Check Eligibility</button>
+
+<div id="eligibilityResult" style="margin-top:20px"></div>
+</div>
+<div class="feature-card" style="padding:16px;max-width:260px;min-height:auto;align-self:start;">
+<div class="tag">Live Alerts</div>
+<h3 style="font-size:1rem;margin-bottom:6px;line-height:1.3;">Weather Alerts</h3>
+<p style="font-size:0.82rem;margin-bottom:10px;color:var(--muted);line-height:1.4;">Quick climate notifications.</p>
+
+<div class="field">
+<label style="font-size:0.9rem;">Alert Type</label>
+<select id="alertType" style="padding:9px;font-size:0.85rem;border-radius:10px;">
+<option>Rainfall Alerts</option>
+<option>Heatwave Alerts</option>
+<option>Storm Alerts</option>
+<option>Frost Alerts</option>
+</select>
+</div>
+
+<br>
+
+<button class="btn btn-primary" style="width:100%;padding:10px;margin-top:12px;font-size:0.85rem;" onclick="enableAlerts()">
+Enable Alerts
+</button>
+
+<div id="alertResult" style="margin-top:14px;font-size:0.9rem;"></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px;">
+<div class="feature-card" style="margin-top:0;">
+<div class="tag">AI Planning</div>
+<h3>Seasonal Crop Planner</h3>
+<p>Generate smart farming plans based on season and crop conditions.</p>
+<div class="field">
+<label>Select Season</label>
+<select id="seasonSelect">
+<option>Kharif</option>
+<option>Rabi</option>
+<option>Zaid</option>
+</select>
+</div>
+<br>
+<button class="btn btn-primary" onclick="generatePlan()">Generate Plan</button>
+<div id="planResult" style="margin-top:20px"></div>
+</div>
+</div>
+</div>
+
+<div class="card" style="margin-top:25px">
+<div class="top-flex">
+<div>
+<h3>Smart Farming Dashboard</h3>
+<p>Live analytics and AI farming insights</p>
+</div>
+<div class="live-badge">LIVE ANALYTICS</div>
+</div>
+<div class="weather-stats">
+<div class="stat"><span>Water Efficiency</span><strong id="waterEfficiency">78%</strong></div>
+<div class="stat"><span>Crop Health</span><strong id="cropHealth">82%</strong></div>
+<div class="stat"><span>Fertilizer Optimization</span><strong id="fertilizerLevel">74%</strong></div>
+<div class="stat"><span>Yield Prediction</span><strong id="yieldPrediction">Good</strong></div>
+</div>
+</div>
+<div class="source-box">
+<strong>Verified Sources:</strong><br><br>
+India Meteorological Department (IMD), Ministry of Agriculture & Farmers Welfare, Krishi APIs, Agricultural Universities, and official state agriculture departments.
+</div>
+</section>
+<footer id="resources">
+<div class="footer-grid">
+<div>
+<h4>AgriConnect</h4>
+<p>Modern agriculture intelligence platform for Indian farmers.</p>
+</div>
+<div>
+<h4>Core Features</h4>
+<p>Weather Intelligence<br>Crop Advisory<br>Government Schemes<br>AI Planning</p>
+</div>
+<div>
+<h4>Trusted Sources</h4>
+<p>IMD<br>Krishi APIs<br>State Agriculture Departments</p>
+</div>
+</div>
+</footer>
+<script>
+const stateCityData={
+"Andhra Pradesh":["Visakhapatnam","Vijayawada","Guntur","Nellore","Kurnool","Tirupati","Rajahmundry","Anantapur","Kadapa","Eluru","Ongole","Chittoor","Srikakulam","Vizianagaram","Machilipatnam","Tenali","Adoni","Hindupur","Proddatur","Bhimavaram","Nandyal","Tadepalligudem","Gudivada","Narasaraopet"],
+"Arunachal Pradesh":["Itanagar","Tawang","Pasighat","Ziro","Bomdila","Naharlagun","Roing"],
+"Assam":["Guwahati","Dibrugarh","Silchar","Jorhat","Nagaon","Tezpur","Tinsukia","Bongaigaon","Dhemaji","Golaghat","Karimganj"],
+"Bihar":["Patna","Gaya","Muzaffarpur","Bhagalpur","Darbhanga","Purnia","Ara","Begusarai","Katihar","Munger","Chapra","Sasaram"],
+"Chhattisgarh":["Raipur","Bilaspur","Durg","Korba","Jagdalpur","Ambikapur","Raigarh","Rajnandgaon","Dhamtari"],
+"Goa":["Panaji","Margao","Mapusa","Vasco da Gama","Ponda","Bicholim"],
+"Gujarat":["Ahmedabad","Surat","Vadodara","Rajkot","Bhavnagar","Jamnagar","Junagadh","Anand","Gandhinagar","Bhuj","Porbandar","Mehsana","Navsari","Palanpur","Valsad","Morbi","Godhra","Veraval"],
+"Haryana":["Gurgaon","Faridabad","Panipat","Hisar","Karnal","Rohtak","Ambala","Sonipat","Kurukshetra","Yamunanagar","Bhiwani","Sirsa"],
+"Himachal Pradesh":["Shimla","Manali","Dharamshala","Solan","Mandi","Kullu","Hamirpur","Chamba","Bilaspur"],
+"Jharkhand":["Ranchi","Jamshedpur","Dhanbad","Bokaro","Hazaribagh","Deoghar","Giridih","Ramgarh","Chaibasa"],
+"Karnataka":["Bengaluru","Mysuru","Hubli","Mangalore","Belgaum","Davangere","Ballari","Shivamogga","Tumakuru","Udupi","Bijapur","Raichur"],
+"Kerala":["Kochi","Thiruvananthapuram","Kozhikode","Thrissur","Kannur","Alappuzha","Kottayam","Palakkad","Malappuram","Kollam","Pathanamthitta","Kasaragod","Idukki","Wayanad","Ponnani","Chalakudy"],
+"Madhya Pradesh":["Bhopal","Indore","Jabalpur","Gwalior","Ujjain","Sagar","Satna","Rewa","Ratlam","Dewas","Chhindwara"],
+"Maharashtra":["Mumbai","Pune","Nagpur","Nashik","Aurangabad","Kolhapur","Solapur","Amravati","Jalgaon","Latur","Akola","Sangli","Satara","Ahmednagar","Thane","Navi Mumbai","Wardha","Chandrapur","Beed","Parbhani","Osmanabad","Dhule","Ratnagiri","Yavatmal"],
+"Manipur":["Imphal","Thoubal","Bishnupur","Churachandpur","Ukhrul"],
+"Meghalaya":["Shillong","Tura","Jowai","Nongpoh","Baghmara"],
+"Mizoram":["Aizawl","Lunglei","Champhai","Saiha","Kolasib"],
+"Nagaland":["Kohima","Dimapur","Mokokchung","Tuensang","Wokha"],
+"Odisha":["Bhubaneswar","Cuttack","Rourkela","Puri","Sambalpur","Balasore","Berhampur","Baripada","Jharsuguda"],
+"Punjab":["Ludhiana","Amritsar","Patiala","Mohali","Bathinda","Jalandhar","Pathankot","Hoshiarpur","Moga","Firozpur","Batala","Barnala","Kapurthala","Abohar","Malerkotla","Sangrur"],
+"Rajasthan":["Jaipur","Jodhpur","Udaipur","Ajmer","Kota","Bikaner","Alwar","Bharatpur","Sikar","Pali","Chittorgarh","Barmer","Jaisalmer","Bhilwara","Hanumangarh","Nagaur","Dungarpur","Tonk"],
+"Sikkim":["Gangtok","Namchi","Geyzing","Mangan","Singtam"],
+"Tamil Nadu":["Chennai","Coimbatore","Madurai","Salem","Tiruchirappalli","Erode","Vellore","Thoothukudi","Dindigul","Tirunelveli","Karur","Kanchipuram"],
+"Telangana":["Hyderabad","Warangal","Karimnagar","Nizamabad","Khammam","Adilabad","Mahbubnagar","Suryapet","Medak"],
+"Tripura":["Agartala","Udaipur","Dharmanagar","Kailasahar","Belonia"],
+"Uttar Pradesh":["Lucknow","Kanpur","Varanasi","Agra","Meerut","Noida","Prayagraj","Gorakhpur","Bareilly","Jhansi","Aligarh","Moradabad","Ayodhya","Mathura","Saharanpur","Ghaziabad","Muzaffarnagar","Rampur","Firozabad","Basti","Sitapur","Unnao","Faizabad","Etawah","Ballia","Mau","Azamgarh"],
+"Uttarakhand":["Dehradun","Haridwar","Nainital","Haldwani","Rishikesh","Roorkee","Almora","Pithoragarh"],
+"West Bengal":["Kolkata","Siliguri","Durgapur","Asansol","Howrah","Malda","Kharagpur","Darjeeling","Bardhaman","Haldia","Krishnanagar","Raiganj","Balurghat","Bankura","Purulia","Jalpaiguri"],
+"Delhi":["New Delhi","Dwarka","Rohini","Saket","Karol Bagh","Pitampura","Janakpuri"],
+"Jammu and Kashmir":["Srinagar","Jammu","Anantnag","Baramulla","Pulwama","Kupwara"],
+"Ladakh":["Leh","Kargil","Diskit"],
+"Puducherry":["Puducherry","Karaikal","Mahe","Yanam"],
+"Chandigarh":["Chandigarh"],
+"Andaman and Nicobar Islands":["Port Blair","Havelock Island","Diglipur"],
+"Dadra and Nagar Haveli and Daman and Diu":["Daman","Diu","Silvassa"],
+"Lakshadweep":["Kavaratti","Agatti","Minicoy"]
+};
+const stateSelect=document.getElementById('stateSelect');
+const citySelect=document.getElementById('citySelect');
+Object.keys(stateCityData).forEach(state=>{
+const option=document.createElement('option');
+option.value=state;
+option.textContent=state;
+stateSelect.appendChild(option);
+});
+function loadCities(){
+citySelect.innerHTML='';
+stateCityData[stateSelect.value].forEach(city=>{
+const option=document.createElement('option');
+option.value=city;
+option.textContent=city;
+citySelect.appendChild(option);
+});
+}
+loadCities();
+stateSelect.addEventListener('change',loadCities);
+document.getElementById('generateBtn').addEventListener('click',()=>{
+const city=citySelect.value;
+const state=stateSelect.value;
+const crop=document.getElementById('cropSelect').value;
+document.getElementById('dashboard').style.display='grid';
+document.getElementById('locationName').textContent=`${city}, ${state}`;
+document.getElementById('advisoryContent').innerHTML=`
+<div class="recommendation">
+<h4>${crop} Crop Advisory</h4>
+<p>Weather conditions are suitable for balanced irrigation and crop monitoring in ${city}.</p>
+</div>
+<div class="recommendation">
+<h4>AI Recommendation</h4>
+<p>Monitor pest activity and apply fertilizer in controlled quantities this week.</p>
+</div>`;
+});
+function checkEligibility(){
+const farmerName=document.getElementById('farmerName').value;
+const farmerType=document.getElementById('farmerType').value;
+const farmSize=document.getElementById('farmSize').value;
+const primaryCrop=document.getElementById('primaryCrop').value;
+
+document.getElementById('eligibilityResult').innerHTML=`
+<div class="recommendation">
+<h4>Eligibility Report for ${farmerName || 'Farmer'}</h4>
+<p>
+Based on your profile as a <strong>${farmerType}</strong> with <strong>${farmSize}</strong> land and <strong>${primaryCrop}</strong> as the primary crop, you may qualify for:
+</p>
+<ul style="margin-top:10px;padding-left:18px;line-height:1.8;">
+<li>PM-KISAN Income Support Scheme</li>
+<li>Crop Insurance Assistance</li>
+<li>Smart Irrigation Subsidy</li>
+<li>Fertilizer & Seed Support Programs</li>
+<li>Solar Pump Subsidy Programs</li>
+</ul>
+</div>`;
+}
+function enableAlerts(){
+const alert=document.getElementById('alertType').value;
+document.getElementById('alertResult').innerHTML=`
+<div class="recommendation">
+<h4>Alerts Enabled</h4>
+<p>${alert} notifications are now active for your selected farming region.</p>
+</div>`;
+}
+function generatePlan(){
+const season=document.getElementById('seasonSelect').value;
+document.getElementById('planResult').innerHTML=`
+<div class="recommendation">
+<h4>${season} Seasonal Plan</h4>
+<p>AI recommends timely irrigation, pest monitoring, and nutrient optimization during this season.</p>
+</div>`;
+}
+setInterval(()=>{
+document.getElementById('waterEfficiency').textContent=`${70+Math.floor(Math.random()*20)}%`;
+document.getElementById('cropHealth').textContent=`${75+Math.floor(Math.random()*15)}%`;
+document.getElementById('fertilizerLevel').textContent=`${65+Math.floor(Math.random()*20)}%`;
+const predictions=['Good','Excellent','Moderate','High Yield Expected'];
+document.getElementById('yieldPrediction').textContent=predictions[Math.floor(Math.random()*predictions.length)];
+},4000);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+
+<script>
+const lenis = new Lenis({
+  duration: 1.2,
+  smoothWheel: true,
+  smoothTouch: false,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
+</script>
+
+</body>
+</html>
+

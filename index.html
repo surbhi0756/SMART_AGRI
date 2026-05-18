@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resources Allocation - Agriculture Technology Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2E7D32',
+                        secondary: '#66BB6A',
+                        accent: '#FFC107',
+                        dark: '#1B5E20',
+                        light: '#E8F5E9'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232E7D32"/><path d="M0 50 Q25 30 50 50 T100 50 L100 100 0 100 Z" fill="%2366BB6A"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .page-transition {
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.8s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .rotate-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .nav-link:hover {
+            color: #FFC107;
+            transform: scale(1.05);
+        }
+        
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .notification {
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .intro-animation {
+            animation: introFade 1.5s ease-out;
+        }
+        
+        @keyframes introFade {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .crop-animation {
+            animation: cropRotate 3s infinite linear;
+        }
+        
+        @keyframes cropRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .vertical-scroll {
+            scroll-snap-type: y mandatory;
+        }
+        
+        .scroll-snap {
+            scroll-snap-align: start;
+        }
+        
+        .game-element {
+            transition: all 0.3s ease;
+        }
+        
+        .game-element:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Intro Animation -->
+    <div id="intro-screen" class="fixed inset-0 bg-gradient-to-br from-green-700 to-green-900 z-50 flex items-center justify-center">
+        <div class="text-center p-8 animate-fade-in">
+            <div class="mb-6">
+                <i class="fas fa-seedling text-6xl text-yellow-300 mb-4 crop-animation"></i>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">Smart Resources Allocation</h1>
+                <p class="text-xl text-green-100">Empowering Farmers for Better Harvests</p>
+            </div>
+            <div class="animate-pulse">
+                <p class="text-lg text-white mb-6">Ripping off the golden crop under the shining summer sun...</p>
+                <div class="w-24 h-24 mx-auto rounded-full border-4 border-yellow-300 border-t-transparent animate-spin"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Popup -->
+    <div id="notification-popup" class="fixed top-4 right-4 w-80 bg-white shadow-xl rounded-lg p-4 z-40 notification hidden">
+        <div class="flex justify-between items-start">
+            <div>
+                <h3 class="font-bold text-gray-800">Latest Update!</h3>
+                <p class="text-sm text-gray-600 mt-1">New farming techniques available for cotton cultivation</p>
+            </div>
+            <button onclick="this.parentElement.parentElement.classList.add('hidden')" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mt-3">
+            <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-green-500 w-3/4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-green-800 text-white z-30 sidebar transform -translate-x-full">
+        <div class="p-4 border-b border-green-700">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-seedling text-2xl text-yellow-300"></i>
+                <h2 class="text-xl font-bold">Smart Resources</h2>
+            </div>
+        </div>
+        <nav class="p-4">
+            <ul class="space-y-2">
+                <li><a href="AgriLearn/" class="w-full text-left px-4 py-2 rounded hover:bg-green-700 transition flex items-center">AgriLearn</a>
+                <li><a href="CropGuard/" class="w-full text-left px-4 py-2 rounded hover:bg-green-700 transition block">FarmSmartTools</a></li>
+                <li><a href="soilHealthTracker/" class="w-full text-left px-4 py-2 rounded hover:bg-green-700 transition block">soilHealthTracker</a></li>
+                <li><a href="Agri Sphere.html" class="w-full text-left px-4 py-2 rounded hover:bg-green-700 transition block">Agri Sphere</a></li>
+                <li><a href="Agri Connect.html" class="w-full text-left px-4 py-2 rounded hover:bg-green-700 transition block">Agri Connect</a></li>
+                <li><a href="/WaterConservation" class="w-full text-left px-4 py-2 rounded hover:bg-green-700 transition block">WaterConservation</a></li>
+                <li><a href ="Community/" class="w-full text-left px-4 py-2 rounded hover:bg-green-700 transition block">Community</a> </li>
+                <li><a href="Resource Allocation.html" class="w-full text-left px-4 py-2 rounded hover:bg-green-700 transition block">Resource Allocation</a></li>
+                <li><a href="Trade.html" class="w-full text-left px-4 py-2 rounded hover:bg-green-700 transition block">Trade</a></li>
+            </ul>
+        
+                
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-toggle" class="fixed top-4 left-4 z-20 bg-green-700 text-white p-3 rounded-full shadow-lg">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div id="main-content" class="min-h-screen pt-16">
+        
+        <!-- Header -->
+        <header class="bg-white shadow-md fixed w-full z-10">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-seedling text-2xl text-green-700"></i>
+                    <h1 class="text-xl font-bold text-gray-800">Smart Resources Allocation</h1>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <button onclick="navigateTo('home')" class="nav-link font-medium">Home</button>
+                    <button onclick="navigateTo('dashboard')" class="nav-link font-medium">Dashboard</button>
+                    <button onclick="navigateTo('marketplace')" class="nav-link font-medium">Marketplace</button>
+                    <button onclick="navigateTo('weather')" class="nav-link font-medium">Weather</button>
+                    <button onclick="navigateTo('community')" class="nav-link font-medium">Community</button>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="relative">
+                        <i class="fas fa-bell text-gray-600"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+                    <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                        <i class="fas fa-user mr-2"></i> Sign In
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Home Page -->
+        <section id="home-page" class="page-transition min-h-screen">
+            <!-- Hero Section -->
+            <div class="hero-bg h-screen flex items-center justify-center relative">
+                <div class="container mx-auto px-4 text-center z-10">
+                    <div class="max-w-3xl mx-auto">
+                        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 animate-slide-in delay-100">Maximize Yield, Minimize Waste</h1>
+                        <p class="text-xl md:text-2xl text-green-100 mb-8 animate-slide-in delay-300">Smart resource allocation for sustainable farming</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-in delay-500">
+                            <button onclick="navigateTo('dashboard')" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105">
+                                Get Started
+                            </button>
+                            <button onclick="navigateTo('marketplace')" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-green-800 font-bold py-3 px-8 rounded-full text-lg transition">
+                                Explore Marketplace
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                    <i class="fas fa-chevron-down text-white text-2xl"></i>
+                </div>
+            </div>
+            <!-- New Navigation Section for Extra Pages -->
+<div class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">More Features</h2>
+        <div class="flex flex-wrap justify-center gap-8">
+            <a href="trade.html" class="bg-green-600 text-white rounded-lg px-6 py-4 w-48 text-center hover:bg-green-700 transition shadow-md">
+                <i class="fas fa-exchange-alt text-3xl mb-2"></i>
+                <div>Trade</div>
+            </a>
+            <a href="resources_allocation.html" class="bg-blue-600 text-white rounded-lg px-6 py-4 w-48 text-center hover:bg-blue-700 transition shadow-md">
+                <i class="fas fa-tasks text-3xl mb-2"></i>
+                <div>Resources Allocation</div>
+            </a>
+            <a href="harvest.html" class="bg-yellow-600 text-white rounded-lg px-6 py-4 w-48 text-center hover:bg-yellow-700 transition shadow-md">
+                <i class="fas fa-clipboard-check text-3xl mb-2"></i>
+                <div>Harvest</div>
+            </a>
+            <a href="analyst.html" class="bg-purple-600 text-white rounded-lg px-6 py-4 w-48 text-center hover:bg-purple-700 transition shadow-md">
+                <i class="fas fa-chart-bar text-3xl mb-2"></i>
+                <div>Analyst</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+            <!-- Intro Video Section -->
+            <div class="py-16 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">How It Works</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">See how Smart Resources Allocation transforms traditional farming practices</p>
+                    </div>
+                    <div class="max-w-4xl mx-auto bg-gray-200 rounded-xl overflow-hidden shadow-lg">
+                        <div class="aspect-video bg-gray-800 flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-play-circle text-5xl text-green-500 mb-4"></i>
+                                <p class="text-white text-xl">Watch Our Introduction Video</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Latest News Section -->
+            <div class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Latest Agricultural News</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Stay updated with the latest farming innovations and government initiatives</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                            <div class="h-48 bg-gradient-to-r from-green-500 to-green-700 flex items-center justify-center">
+                                <i class="fas fa-seedling text-6xl text-white"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">New Crop Varieties Announced</h3>
+                                <p class="text-gray-600 mb-4">Government introduces drought-resistant wheat varieties for northern states</p>
+                                <span class="inline-block bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full">Agriculture</span>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                            <div class="h-48 bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center">
+                                <i class="fas fa-tractor text-6xl text-white"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Digital Farming Initiative</h3>
+                                <p class="text-gray-600 mb-4">State governments launch digital platforms for farmers to access subsidies</p>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">Technology</span>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                            <div class="h-48 bg-gradient-to-r from-yellow-500 to-yellow-700 flex items-center justify-center">
+                                <i class="fas fa-money-bill-wave text-6xl text-white"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Subsidy Portal Launched</h3>
+                                <p class="text-gray-600 mb-4">Online portal simplifies subsidy application for farmers across all states</p>
+                                <span class="inline-block bg-yellow-100 text-yellow-800 text-sm px-3 py-1 rounded-full">Finance</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="py-16 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Key Features</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Everything you need to optimize your farming operations</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="text-center p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-water text-green-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Water Management</h3>
+                            <p class="text-gray-600">Optimize irrigation using smart sensors and weather data</p>
+                        </div>
+                        <div class="text-center p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                            <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-leaf text-yellow-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Nutrient Optimization</h3>
+                            <p class="text-gray-600">Precision fertilization based on soil analysis and crop needs</p>
+                        </div>
+                        <div class="text-center p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-cloud text-blue-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Weather Forecasting</h3>
+                            <p class="text-gray-600">Accurate predictions to plan planting and harvesting schedules</p>
+                        </div>
+                        <div class="text-center p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shopping-cart text-purple-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Marketplace Access</h3>
+                            <p class="text-gray-600">Direct connection with buyers and suppliers for better prices</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="py-16 bg-gradient-to-r from-green-700 to-green-900 text-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold mb-4">Connect With Us</h2>
+                        <p class="max-w-2xl mx-auto">Join our farming community and stay connected with the latest updates</p>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-6">
+                        <a href="#" class="bg-white bg-opacity-20 p-4 rounded-full hover:bg-opacity-30 transition">
+                            <i class="fab fa-facebook-f text-2xl"></i>
+                        </a>
+                        <a href="#" class="bg-white bg-opacity-20 p-4 rounded-full hover:bg-opacity-30 transition">
+                            <i class="fab fa-twitter text-2xl"></i>
+                        </a>
+                        <a href="#" class="bg-white bg-opacity-20 p-4 rounded-full hover:bg-opacity-30 transition">
+                            <i class="fab fa-instagram text-2xl"></i>
+                        </a>
+                        <a href="#" class="bg-white bg-opacity-20 p-4 rounded-full hover:bg-opacity-30 transition">
+                            <i class="fab fa-youtube text-2xl"></i>
+                        </a>
+                        <a href="#" class="bg-white bg-opacity-20 p-4 rounded-full hover:bg-opacity-30 transition">
+                            <i class="fab fa-whatsapp text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Page -->
+        <section id="dashboard-page" class="page-transition min-h-screen hidden">
+            <div class="bg-white py-16">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Farm Dashboard</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Monitor your farm performance and manage resources efficiently</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="lg:col-span-2 bg-gradient-to-r from-green-500 to-green-700 rounded-xl p-6 text-white">
+                            <h3 class="text-xl font-bold mb-4">Current Farm Status</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                                    <p class="text-sm">Crop Health</p>
+                                    <p class="text-2xl font-bold">92%</p>
+                                </div>
+                                <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                                    <p class="text-sm">Water Usage</p>
+                                    <p class="text-2xl font-bold">78%</p>
+                                </div>
+                                <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                                    <p class="text-sm">Soil Moisture</p>
+                                    <p class="text-2xl font-bold">65%</p>
+                                </div>
+                                <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                                    <p class="text-sm">Nutrient Level</p>
+                                    <p class="text-2xl font-bold">82%</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Quick Actions</h3>
+                            <div class="space-y-4">
+                                <button class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition">
+                                    Schedule Irrigation
+                                </button>
+                                <button class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+                                    Check Weather Forecast
+                                </button>
+                                <button class="w-full bg-yellow-600 text-white py-3 rounded-lg hover:bg-yellow-700 transition">
+                                    Order Fertilizer
+                                </button>
+                                <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">
+                                    View Market Prices
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Resource Allocation</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Water</span>
+                                        <span>78%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div class="bg-green-600 h-2.5 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Fertilizers</span>
+                                        <span>92%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 92%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Pesticides</span>
+                                        <span>45%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div class="bg-yellow-600 h-2.5 rounded-full" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Labor</span>
+                                        <span>67%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div class="bg-purple-600 h-2.5 rounded-full" style="width: 67%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Upcoming Tasks</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div class="bg-green-100 p-2 rounded-full mr-3">
+                                        <i class="fas fa-tint text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">Irrigation Schedule</h4>
+                                        <p class="text-sm text-gray-600">Next watering due in 3 days</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                        <i class="fas fa-seedling text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">Fertilizer Application</h4>
+                                        <p class="text-sm text-gray-600">Apply nitrogen fertilizer next week</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-yellow-100 p-2 rounded-full mr-3">
+                                        <i class="fas fa-leaf text-yellow-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">Pest Control</h4>
+                                        <p class="text-sm text-gray-600">Monitor for aphids in cornfield</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marketplace Page -->
+        <section id="marketplace-page" class="page-transition min-h-screen hidden">
+            <div class="bg-white py-16">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Agricultural Marketplace</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Buy and sell agricultural products, equipment, and services</p>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <div class="flex flex-wrap gap-4 justify-center">
+                            <button class="bg-green-600 text-white px-6 py-2 rounded-full">All Products</button>
+                            <button class="bg-gray-200 text-gray-700 px-6 py-2 rounded-full">Seeds & Plants</button>
+                            <button class="bg-gray-200 text-gray-700 px-6 py-2 rounded-full">Fertilizers</button>
+                            <button class="bg-gray-200 text-gray-700 px-6 py-2 rounded-full">Equipment</button>
+                            <button class="bg-gray-200 text-gray-700 px-6 py-2 rounded-full">Services</button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                            <div class="h-48 bg-gradient-to-r from-green-500 to-green-700 flex items-center justify-center">
+                                <i class="fas fa-seedling text-6xl text-white"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Premium Wheat Seeds</h3>
+                                <p class="text-gray-600 mb-4">High-yield variety with improved disease resistance</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-bold text-green-600">₹120/kg</span>
+                                    <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                                        <i class="fas fa-shopping-cart mr-2"></i> Buy Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                            <div class="h-48 bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center">
+                                <i class="fas fa-truck text-6xl text-white"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Tractor Rental Service</h3>
+                                <p class="text-gray-600 mb-4">Available for 4 hours daily at ₹1500</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-bold text-blue-600">₹1500/4 hrs</span>
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                        <i class="fas fa-calendar-check mr-2"></i> Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                            <div class="h-48 bg-gradient-to-r from-yellow-500 to-yellow-700 flex items-center justify-center">
+                                <i class="fas fa-spray-can text-6xl text-white"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Organic Pesticide</h3>
+                                <p class="text-gray-600 mb-4">Natural solution for pest control without chemical residues</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-bold text-yellow-600">₹850/liter</span>
+                                    <button class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition">
+                                        <i class="fas fa-shopping-cart mr-2"></i> Buy Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Forecast Page -->
+        <section id="weather-page" class="page-transition min-h-screen hidden">
+            <div class="bg-white py-16">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Weather Forecast & Alerts</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Stay informed with accurate weather predictions and alerts</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="lg:col-span-2 bg-gradient-to-r from-blue-500 to-blue-700 rounded-xl p-6 text-white">
+                            <h3 class="text-xl font-bold mb-4">Weekly Weather Forecast</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="border-b border-blue-300">
+                                            <th class="pb-3">Day</th>
+                                            <th class="pb-3">Condition</th>
+                                            <th class="pb-3">Temp (°C)</th>
+                                            <th class="pb-3">Rain %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b border-blue-300">
+                                            <td class="py-3">Today</td>
+                                            <td class="py-3">Clear Skies</td>
+                                            <td class="py-3">28-32</td>
+                                            <td class="py-3">10%</td>
+                                        </tr>
+                                        <tr class="border-b border-blue-300">
+                                            <td class="py-3">Tomorrow</td>
+                                            <td class="py-3">Partly Cloudy</td>
+                                            <td class="py-3">25-29</td>
+                                            <td class="py-3">20%</td>
+                                        </tr>
+                                        <tr class="border-b border-blue-300">
+                                            <td class="py-3">Wednesday</td>
+                                            <td class="py-3">Light Rain</td>
+                                            <td class="py-3">22-26</td>
+                                            <td class="py-3">70%</td>
+                                        </tr>
+                                        <tr class="border-b border-blue-300">
+                                            <td class="py-3">Thursday</td>
+                                            <td class="py-3">Cloudy</td>
+                                            <td class="py-3">20-24</td>
+                                            <td class="py-3">45%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3">Friday</td>
+                                            <td class="py-3">Sunny</td>
+                                            <td class="py-3">27-31</td>
+                                            <td class="py-3">5%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Weather Alerts</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-blue-50 rounded-lg">
+                                    <h4 class="font-semibold text-blue-800">Heat Advisory</h4>
+                                    <p class="text-sm text-blue-600">Temperatures expected to reach 35°C in the afternoon</p>
+                                    <span class="text-xs text-blue-500 mt-2 block">Issued 2 hours ago</span>
+                                </div>
+                                <div class="p-4 bg-orange-50 rounded-lg">
+                                    <h4 class="font-semibold text-orange-800">Rainfall Alert</h4>
+                                    <p class="text-sm text-orange-600">Heavy rainfall expected tomorrow evening</p>
+                                    <span class="text-xs text-orange-500 mt-2 block">Issued 1 hour ago</span>
+                                </div>
+                                <div class="p-4 bg-green-50 rounded-lg">
+                                    <h4 class="font-semibold text-green-800">Growth Season</h4>
+                                    <p class="text-sm text-green-600">Ideal conditions for planting in next 7 days</p>
+                                    <span class="text-xs text-green-500 mt-2 block">Issued 3 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Soil Moisture Monitoring</h3>
+                        <div class="h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-chart-line text-5xl text-green-500 mb-4"></i>
+                                <p class="text-gray-600">Real-time soil moisture data visualization</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Page -->
+        <section id="community-page" class="page-transition min-h-screen hidden">
+            <div class="bg-white py-16">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Farmer Community</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Connect with fellow farmers, share knowledge, and get support</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        <div class="lg:col-span-2">
+                            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                                <div class="flex items-center mb-4">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyNSIgY3k9IjI1IiByPSIxNSIgZmlsbD0iIzJFN0QzMiIvPjxwYXRoIGQ9Ik0xNSAyNUgyNVYzNUgxNVoiIGZpbGw9IiM2NkJCNkEiLz48L3N2Zz4=" alt="User" class="w-12 h-12 rounded-full mr-4">
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">Rajesh Kumar</h4>
+                                        <p class="text-sm text-gray-600">Karnataka | Cotton Farmer</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 mb-4">Just planted my new cotton variety! The yield is expected to be 20% higher than last season. What techniques are you using for pest management?</p>
+                                <div class="flex space-x-4">
+                                    <button class="text-gray-500 hover:text-green-600">
+                                        <i class="far fa-heart"></i> 24
+                                    </button>
+                                    <button class="text-gray-500 hover:text-green-600">
+                                        <i class="far fa-comment"></i> 8
+                                    </button>
+                                    <button class="text-gray-500 hover:text-green-600">
+                                        <i class="far fa-share-square"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl shadow-lg p-6">
+                                <div class="flex items-center mb-4">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyNSIgY3k9IjI1IiByPSIxNSIgZmlsbD0iIzZBN0QzMiIvPjxwYXRoIGQ9Ik0xNSAyNUgyNVYzNUgxNVoiIGZpbGw9IiM2NkJCNkEiLz48L3N2Zz4=" alt="User" class="w-12 h-12 rounded-full mr-4">
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">Priya Sharma</h4>
+                                        <p class="text-sm text-gray-600">Maharashtra | Vegetable Grower</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 mb-4">Has anyone tried the new organic fertilizer mix? I'm seeing great results with my tomato plants. Would love to know the application rate.</p>
+                                <div class="flex space-x-4">
+                                    <button class="text-gray-500 hover:text-green-600">
+                                        <i class="far fa-heart"></i> 32
+                                    </button>
+                                    <button class="text-gray-500 hover:text-green-600">
+                                        <i class="far fa-comment"></i> 15
+                                    </button>
+                                    <button class="text-gray-500 hover:text-green-600">
+                                        <i class="far fa-share-square"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Upcoming Events</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 border-l-4 border-green-500">
+                                    <h4 class="font-semibold">Crop Management Workshop</h4>
+                                    <p class="text-sm text-gray-600">Learn advanced techniques for rice cultivation</p>
+                                    <p class="text-xs text-gray-500 mt-1">Date: June 15, 2023 | Location: Regional Agricultural Center</p>
+                                </div>
+                                <div class="p-4 border-l-4 border-blue-500">
+                                    <h4 class="font-semibold">Digital Farming Seminar</h4>
+                                    <p class="text-sm text-gray-600">How technology can boost your yields</p>
+                                    <p class="text-xs text-gray-500 mt-1">Date: June 20, 2023 | Online Event</p>
+                                </div>
+                                <div class="p-4 border-l-4 border-yellow-500">
+                                    <h4 class="font-semibold">Seed Certification Training</h4>
+                                    <p class="text-sm text-gray-600">Learn about quality seed standards</p>
+                                    <p class="text-xs text-gray-500 mt-1">Date: June 25, 2023 | Local Extension Office</p>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-800 mt-8 mb-4">Recent Discussions</h3>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <p class="text-sm font-medium">Best practices for drought-resistant crops</p>
+                                    <p class="text-xs text-gray-500">12 replies • 2 hours ago</p>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <p class="text-sm font-medium">Price comparison for organic inputs</p>
+                                    <p class="text-xs text-gray-500">8 replies • 5 hours ago</p>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <p class="text-sm font-medium">Seasonal pest management strategies</p>
+                                    <p class="text-xs text-gray-500">15 replies • 1 day ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-green-500 to-green-700 rounded-xl p-8 text-white text-center">
+                        <h3 class="text-2xl font-bold mb-4">Join Our Community</h3>
+                        <p class="mb-6 max-w-2xl mx-auto">Connect with thousands of farmers to share experiences, ask questions, and grow together</p>
+                        <button class="bg-white text-green-700 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition">
+                            <i class="fas fa-plus-circle mr-2"></i> Create Discussion
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Page -->
+        <section id="resources-page" class="page-transition min-h-screen hidden">
+            <div class="bg-white py-16">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Educational Resources</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Access farming guides, tutorials, and expert advice</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                            <div class="h-48 bg-gradient-to-r from-green-500 to-green-700 flex items-center justify-center">
+                                <i class="fas fa-book text-6xl text-white"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Crop Management Guide</h3>
+                                <p class="text-gray-600 mb-4">Complete guide to growing various crops with best practices</p>
+                                <button class="text-green-600 font-medium flex items-center">
+                                    Download PDF <i class="fas fa-download ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                            <div class="h-48 bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center">
+                                <i class="fas fa-video text-6xl text-white"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Video Tutorials</h3>
+                                <p class="text-gray-600 mb-4">Step-by-step videos for common farming tasks</p>
+                                <button class="text-blue-600 font-medium flex items-center">
+                                    Watch Videos <i class="fas fa-play-circle ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                            <div class="h-48 bg-gradient-to-r from-yellow-500 to-yellow-700 flex items-center justify-center">
+                                <i class="fas fa-laptop text-6xl text-white"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Online Courses</h3>
+                                <p class="text-gray-600 mb-4">Professional courses for improving farming skills</p>
+                                <button class="text-yellow-600 font-medium flex items-center">
+                                    Enroll Now <i class="fas fa-graduation-cap ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-16">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Expert Articles</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="border border-gray-200 rounded-xl p-6">
+                                <div class="flex items-start mb-4">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyNSIgY3k9IjI1IiByPSIxNSIgZmlsbD0iIzJFN0QzMiIvPjxwYXRoIGQ9Ik0xNSAyNUgyNVYzNUgxNVoiIGZpbGw9IiM2NkJCNkEiLz48L3N2Zz4=" alt="Expert" class="w-12 h-12 rounded-full mr-4">
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">Dr. Suresh Patel</h4>
+                                        <p class="text-sm text-gray-600">Agronomy Expert</p>
+                                    </div>
+                                </div>
+                                <h4 class="text-xl font-bold text-gray-800 mb-2">Optimizing Water Usage in Dry Seasons</h4>
+                                <p class="text-gray-700 mb-4">Discover innovative techniques to maximize water efficiency during dry periods while maintaining healthy crop growth.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">Published: May 15, 2023</span>
+                                    <button class="text-green-600 font-medium">Read More</button>
+                                </div>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-xl p-6">
+                                <div class="flex items-start mb-4">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyNSIgY3k9IjI1IiByPSIxNSIgZmlsbD0iIzZBN0QzMiIvPjxwYXRoIGQ9Ik0xNSAyNUgyNVYzNUgxNVoiIGZpbGw9IiM2NkJCNkEiLz48L3N2Zz4=" alt="Expert" class="w-12 h-12 rounded-full mr-4">
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">Dr. Anjali Mehta</h4>
+                                        <p class="text-sm text-gray-600">Soil Science Specialist</p>
+                                    </div>
+                                </div>
+                                <h4 class="text-xl font-bold text-gray-800 mb-2">Soil Testing Techniques for Better Yields</h4>
+                                <p class="text-gray-700 mb-4">Learn how proper soil testing can help you identify deficiencies and optimize fertilizer applications for maximum returns.</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">Published: May 10, 2023</span>
+                                    <button class="text-green-600 font-medium">Read More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Krishi Department Connection Page -->
+        <section id="krishi-page" class="page-transition min-h-screen hidden">
+            <div class="bg-white py-16">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Krishi Department Integration</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Direct access to government schemes and support programs</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-gradient-to-r from-green-600 to-green-800 rounded-xl p-8 text-white">
+                            <h3 class="text-2xl font-bold mb-4">Government Schemes & Subsidies</h3>
+                            <p class="mb-6">Access information about all government agricultural subsidies and schemes directly through our platform</p>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-300 mt-1 mr-3"></i>
+                                    <div>
+                                        <h4 class="font-semibold">PM-KISAN Scheme</h4>
+                                        <p class="text-green-100 text-sm">₹6,000/year direct benefit transfer</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-300 mt-1 mr-3"></i>
+                                    <div>
+                                        <h4 class="font-semibold">Crop Insurance Scheme</h4>
+                                        <p class="text-green-100 text-sm">Compensation for crop loss due to natural calamities</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-300 mt-1 mr-3"></i>
+                                    <div>
+                                        <h4 class="font-semibold">Soil Health Card</h4>
+                                        <p class="text-green-100 text-sm">Free soil testing and nutrient recommendations</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg p-8">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Quick Links</h3>
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <a href="#" class="bg-green-100 text-green-800 p-4 rounded-lg text-center hover:bg-green-200 transition">
+                                    <i class="fas fa-file-alt text-2xl mb-2"></i>
+                                    <p>Scheme Information</p>
+                                </a>
+                                <a href="#" class="bg-blue-100 text-blue-800 p-4 rounded-lg text-center hover:bg-blue-200 transition">
+                                    <i class="fas fa-mobile-alt text-2xl mb-2"></i>
+                                    <p>Mobile App</p>
+                                </a>
+                                <a href="#" class="bg-yellow-100 text-yellow-800 p-4 rounded-lg text-center hover:bg-yellow-200 transition">
+                                    <i class="fas fa-map-marker-alt text-2xl mb-2"></i>
+                                    <p>Find Centers</p>
+                                </a>
+                                <a href="#" class="bg-purple-100 text-purple-800 p-4 rounded-lg text-center hover:bg-purple-200 transition">
+                                    <i class="fas fa-question-circle text-2xl mb-2"></i>
+                                    <p>FAQs</p>
+                                </a>
+                            </div>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <h4 class="font-bold text-gray-800 mb-2">Need Assistance?</h4>
+                                <p class="text-gray-600 text-sm mb-3">Contact Krishi Department regional offices</p>
+                                <div class="flex space-x-2">
+                                    <button class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-900 transition">
+                                        <i class="fas fa-phone mr-1"></i> Call Support
+                                    </button>
+                                    <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm hover:bg-gray-300 transition">
+                                        <i class="fas fa-envelope mr-1"></i> Email
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-8 mb-12">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Important Notifications</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 border-l-4 border-blue-500 bg-blue-50 rounded-r-lg">
+                                <h4 class="font-bold text-blue-800">New Crop Price Announcement</h4>
+                                <p class="text-blue-600">The minimum support price for wheat has been increased by 5% effective from June 1st.</p>
+                                <p class="text-xs text-blue-500 mt-2">Posted: May 20, 2023</p>
+                            </div>
+                            <div class="p-4 border-l-4 border-green-500 bg-green-50 rounded-r-lg">
+                                <h4 class="font-bold text-green-800">Soil Health Card Distribution</h4>
+                                <p class="text-green-600">Distribution of soil health cards will begin from June 15th in all districts.</p>
+                                <p class="text-xs text-green-500 mt-2">Posted: May 18, 2023</p>
+                            </div>
+                            <div class="p-4 border-l-4 border-yellow-500 bg-yellow-50 rounded-r-lg">
+                                <h4 class="font-bold text-yellow-800">Summer Crops Festival</h4>
+                                <p class="text-yellow-600">Annual agricultural festival to showcase new varieties and technologies.</p>
+                                <p class="text-xs text-yellow-500 mt-2">Posted: May 15, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-green-500 to-green-700 rounded-xl p-8 text-white">
+                        <div class="flex flex-col md:flex-row justify-between items-center">
+                            <div class="mb-4 md:mb-0">
+                                <h3 class="text-2xl font-bold mb-2">Get Direct Government Support</h3>
+                                <p>Connect with official Krishi Department channels for faster assistance</p>
+                            </div>
+                            <button class="bg-white text-green-700 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                                <i class="fas fa-handshake mr-2"></i> Connect Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact-page" class="page-transition min-h-screen hidden">
+            <div class="bg-white py-16">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Contact Us</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Have questions? Get in touch with our team of agricultural experts</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white rounded-xl shadow-lg p-8">
+                            <h3 class="text-xl font-bold text-gray-800 mb-6">Send us a Message</h3>
+                            <form class="space-y-6">
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Name</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Email</label>
+                                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Subject</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Message</label>
+                                    <textarea rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                                </div>
+                                <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition">
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div>
+                            <div class="bg-gradient-to-r from-green-600 to-green-800 rounded-xl p-8 text-white h-full">
+                                <h3 class="text-xl font-bold mb-6">Contact Information</h3>
+                                
+                                <div class="space-y-6">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-map-marker-alt text-2xl mr-4 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-bold text-lg">Our Office</h4>
+                                            <p>123 Agricultural Avenue<br>Mumbai, Maharashtra 400001</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <i class="fas fa-phone-alt text-2xl mr-4 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-bold text-lg">Phone</h4>
+                                            <p>+91 98765 43210<br>+91 98765 43211</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <i class="fas fa-envelope text-2xl mr-4 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-bold text-lg">Email</h4>
+                                            <p>support@smartresources.in<br>info@smartresources.in</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <i class="fas fa-clock text-2xl mr-4 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-bold text-lg">Working Hours</h4>
+                                            <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 2:00 PM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-8 bg-white bg-opacity-20 p-4 rounded-lg">
+                                    <h4 class="font-bold mb-2">Emergency Support</h4>
+                                    <p class="text-sm">For urgent agricultural issues, call our emergency hotline:</p>
+                                    <p class="text-xl font-bold mt-2">+91 98765 00000</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <i class="fas fa-seedling text-2xl text-yellow-300"></i>
+                            <h3 class="text-xl font-bold">Smart Resources</h3>
+                        </div>
+                        <p class="text-gray-400 mb-4">Empowering farmers with technology-driven solutions for better yields and sustainable agriculture.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><button onclick="navigateTo('home')" class="text-gray-400 hover:text-white">Home</button></li>
+                            <li><button onclick="navigateTo('dashboard')" class="text-gray-400 hover:text-white">Dashboard</button></li>
+                            <li><button onclick="navigateTo('marketplace')" class="text-gray-400 hover:text-white">Marketplace</button></li>
+                            <li><button onclick="navigateTo('weather')" class="text-gray-400 hover:text-white">Weather Forecast</button></li>
+                            <li><button onclick="navigateTo('community')" class="text-gray-400 hover:text-white">Community</button></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Resources</h4>
+                        <ul class="space-y-2">
+                            <li><button onclick="navigateTo('resources')" class="text-gray-400 hover:text-white">Educational Materials</button></li>
+                            <li><button onclick="navigateTo('krishi')" class="text-gray-400 hover:text-white">Government Schemes</button></li>
+                            <li><button onclick="navigateTo('contact')" class="text-gray-400 hover:text-white">Support Center</button></li>
+                            <li><button onclick="navigateTo('contact')" class="text-gray-400 hover:text-white">Help Desk</button></li>
+                            <li><button onclick="navigateTo('contact')" class="text-gray-400 hover:text-white">FAQ</button></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Newsletter</h4>
+                        <p class="text-gray-400 mb-4">Subscribe to receive agricultural updates and tips</p>
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-lg text-gray-800 focus:outline-none">
+                            <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-r-lg">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                    <p>&copy; 2023 Smart Resources Allocation. All rights reserved. Developed for Indian Farmers.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show notification after delay
+            setTimeout(() => {
+                document.getElementById('notification-popup').classList.remove('hidden');
+            }, 3000);
+            
+            // Hide intro screen after animation
+            setTimeout(() => {
+                document.getElementById('intro-screen').classList.add('hidden');
+            }, 2000);
+            
+            // Toggle sidebar menu
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+            
+            // Close sidebar when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            });
+            
+            // Navigation function
+            window.navigateTo = function(page) {
+                // Hide all pages
+                const pages = document.querySelectorAll('section[id$="-page"]');
+                pages.forEach(page => page.classList.add('hidden'));
+                
+                // Show selected page
+                document.getElementById(page + '-page').classList.remove('hidden');
+                
+                // Close sidebar if open
+                sidebar.classList.add('-translate-x-full');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            };
+            
+            // Add animation classes to elements
+            const elements = document.querySelectorAll('.slide-in, .pulse, .floating, .card-hover');
+            elements.forEach(el => {
+                el.classList.add('opacity-0', 'transform', 'translate-y-10');
+                setTimeout(() => {
+                    el.classList.remove('opacity-0', 'translate-y-10');
+                    el.classList.add('opacity-100', 'translate-y-0');
+                }, 300);
+            });
+        });
+    </script>
+    <script type="text/javascript">
+    (function (l) {
+      if (l.search[1] === "/") {
+        var decoded = l.search
+          .slice(1)
+          .split("&")
+          .map(function (s) {
+            return s.replace(/~and~/g, "&");
+          })
+          .join("?");
+        window.history.replaceState(
+          null,
+          null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    })(window.location);
+  </script>
+</body>
+</html>

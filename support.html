@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support & Collaboration</title>
+
+    <link rel="stylesheet" href="support.css">
+</head>
+
+<body>
+
+<!-- ==============================
+     NAVBAR
+================================ -->
+
+<header class="navbar">
+
+    <div class="logo-section">
+        <h1>🌾 Support & Integration Center</h1>
+        <p>Farmer support, collaboration & AI assistance</p>
+    </div>
+
+    <nav class="nav-links">
+        <a href="community.html">Community</a>
+        <a href="#">Support</a>
+        <a href="#">Workspace</a>
+        <a href="#">Meetings</a>
+    </nav>
+
+</header>
+
+<!-- ==============================
+     MAIN CONTAINER
+================================ -->
+
+<div class="container">
+
+    <!-- Contact Support -->
+
+    <div class="card">
+
+        <h2>📞 Contact & Support</h2>
+
+        <input type="text"
+               id="supportName"
+               placeholder="Enter your name">
+
+        <textarea id="supportMessage"
+                  placeholder="Describe your issue or question"></textarea>
+
+        <button onclick="submitSupport()">
+            Submit Request
+        </button>
+
+        <div id="supportResult"></div>
+
+    </div>
+
+    <!-- AI Chatbot -->
+
+    <div class="card">
+
+        <h2>🤖 AI Chatbot Assistant</h2>
+
+        <div class="chat-box" id="chatBox">
+
+            <div class="bot-message">
+                👋 Hello Farmer! Ask me about crops, subsidies, or farming methods.
+            </div>
+
+        </div>
+
+        <input type="text"
+               id="chatInput"
+               placeholder="Ask your farming question">
+
+        <button onclick="sendMessage()">
+            Send
+        </button>
+
+    </div>
+
+    <!-- Collaboration Workspace -->
+
+    <div class="card">
+
+        <h2>🤝 Collaboration Workspace</h2>
+
+        <input type="text"
+               id="workspaceName"
+               placeholder="Workspace / Cooperative Name">
+
+        <textarea id="workspaceMessage"
+                  placeholder="Discuss farming plans or group activities"></textarea>
+
+        <button onclick="createWorkspace()">
+            Create Workspace
+        </button>
+
+        <div id="workspaceBoard"></div>
+
+    </div>
+
+    <!-- FAQ -->
+
+    <div class="card">
+
+        <h2>❓ FAQ & Documentation</h2>
+
+        <div class="faq-item">
+            <h3>How do I apply for subsidies?</h3>
+
+            <p>
+                Visit your nearest agriculture office with land records and crop details.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How does crop analysis work?</h3>
+
+            <p>
+                Upload crop images and receive AI-powered recommendations.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Can I share my profile with buyers?</h3>
+
+            <p>
+                Yes, use the profile visibility option in your dashboard.
+            </p>
+        </div>
+ <!-- Shared Whiteboard -->
+    </div>
+    <div class="card">
+
+        <h2>🖍️ Shared Whiteboard</h2>
+
+        <textarea id="whiteboard"
+                  placeholder="Write farming ideas, planning notes, or strategies"></textarea>
+
+        <button onclick="saveWhiteboard()">
+            Save Notes
+        </button>
+
+        <div id="whiteboardResult"></div>
+
+    </div>
+
+    
+
+    <!-- Video Conference -->
+
+    <div class="card">
+
+        <h2>🎥 Video Conferencing</h2>
+
+        <p>
+            Farmers, consultants, and cooperatives can connect using video meetings.
+        </p>
+
+        <button onclick="startMeeting()">
+            Start Meeting
+        </button>
+
+        <div id="meetingStatus"></div>
+
+    </div>
+    <!-- Krishi Helplines -->
+
+    <div class="card">
+
+        <h2>☎️ Krishi Department Helplines</h2>
+
+        <ul>
+
+            <li>🌾 Agriculture Helpline: 1800-180-1551</li>
+
+            <li>🚜 PM-KISAN Support: 155261</li>
+
+            <li>💧 Irrigation Assistance: 1800-121-320</li>
+
+        </ul>
+
+    </div>
+
+    <!-- AI Meeting Summary -->
+
+    <div class="card">
+
+        <h2>🧠 AI Meeting Summary</h2>
+
+        <textarea id="meetingNotes"
+                  placeholder="Paste meeting discussion notes"></textarea>
+
+        <button onclick="generateSummary()">
+            Generate Summary
+        </button>
+
+        <div id="summaryResult"></div>
+
+    </div>
+
+</div>
+
+<script src="support.js"></script>
+
+</body>
+</html>

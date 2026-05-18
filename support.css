@@ -1,0 +1,381 @@
+/* ==============================
+   GLOBAL STYLING
+================================ */
+
+body {
+
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    background-image: url('/Images/wp9238674.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: white;
+}
+
+/* ==============================
+   NAVBAR
+================================ */
+
+.navbar {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 40px;
+
+    background: rgba(0,0,0,0.55);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    z-index: 1000;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Logo */
+
+.logo-section h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+}
+
+.logo-section p {
+
+    margin-top: 5px;
+
+    font-size: 14px;
+
+    color: #d7ffd9;
+}
+
+/* Navigation */
+
+.nav-links {
+
+    display: flex;
+
+    gap: 25px;
+
+    margin-right: 70px;
+}
+
+.nav-links a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+
+    color: #0e253d;
+}
+
+/* ==============================
+   MAIN GRID LAYOUT
+================================ */
+
+.container {
+
+    width: 90%;
+
+    margin: 140px auto 40px auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 45px;
+}
+
+/* ==============================
+   GLASS CARDS
+================================ */
+
+.card {
+
+    background: rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    border-left: 5px solid #13568d;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+
+    transition: 0.3s ease;
+}
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 12px 24px rgba(0,0,0,0.45);
+}
+
+/* ==============================
+   CUSTOM CARD LAYOUT
+================================ */
+
+/* Contact Support */
+
+.card:nth-child(1) {
+
+    height: 320px;
+}
+
+/* AI Chatbot */
+
+.card:nth-child(2) {
+
+    height: 320px;
+}
+
+/* Collaboration Workspace */
+
+.card:nth-child(3) {
+
+    grid-column: span 2;
+    height: 320px;
+}
+
+/* FAQ */
+
+.card:nth-child(4) {
+
+    height:450px;
+}
+
+/* Krishi Helplines */
+
+.card:nth-child(5) {
+
+    height: 450px;
+}
+
+/* Video Conference */
+
+.card:nth-child(6) {
+
+    height: 200px;
+}
+
+/* Shared Whiteboard */
+
+.card:nth-child(7) {
+
+    height: 200px;
+}
+
+/* AI Meeting Summary */
+
+.card:nth-child(8) {
+    grid-column: span 2;
+    height: 250px;
+}
+
+/* ==============================
+   HEADINGS
+================================ */
+
+h2 {
+
+    color: #072137;
+
+    margin-top: 0;
+}
+
+/* ==============================
+   INPUTS & TEXTAREA
+================================ */
+
+input,
+textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    margin-top: 8px;
+    margin-bottom: 15px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    background: rgba(255,255,255,0.9);
+}
+
+/* Textarea */
+
+textarea {
+
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+/* ==============================
+   BUTTONS
+================================ */
+
+button {
+
+    padding: 10px 20px;
+
+    background: #0c416d;
+
+    color: white;
+
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+button:hover {
+
+    background: #072137;
+
+    transform: scale(1.03);
+}
+
+/* ==============================
+   CHATBOX
+================================ */
+
+.chat-box {
+
+    background: rgba(0,0,0,0.7);
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    height: 120px;
+
+    overflow-y: auto;
+
+    margin-bottom: 15px;
+}
+
+/* ==============================
+   CHAT MESSAGES
+================================ */
+
+.bot-message,
+.user-message {
+
+    margin-bottom: 10px;
+
+    padding: 10px;
+
+    border-radius: 8px;
+}
+
+.bot-message {
+
+    background: white;
+
+    color: black;
+}
+
+.user-message {
+
+    background: #c8e6c9;
+
+    color: black;
+
+    text-align: right;
+}
+
+/* ==============================
+   FAQ
+================================ */
+
+.faq-item {
+
+    background: rgba(0,0,0,0.7);
+
+    padding: 15px;
+
+    margin-bottom: 10px;
+
+    border-radius: 8px;
+}
+
+/* ==============================
+   WORKSPACE & SUMMARY
+================================ */
+
+.workspace-post,
+.summary-box {
+
+    background: rgba(255,255,255,0.85);
+
+    color: black;
+
+    padding: 15px;
+
+    margin-top: 15px;
+
+    border-radius: 8px;
+}
+
+/* ==============================
+   LIST ITEMS
+================================ */
+
+ul {
+
+    list-style: none;
+
+    padding: 0;
+}
+
+li {
+
+    background: rgba(255,255,255,0.85);
+
+    color: black;
+
+    padding: 10px;
+
+    margin-bottom: 10px;
+
+    border-radius: 5px;
+}
+
+#whiteboard{
+    height: 320px;
+}

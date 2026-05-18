@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Farmer Dashboard</title>
+    <link rel="stylesheet" href="personal_dashboard.css">
+</head>
+<body>
+
+<header class="navbar">
+
+    <div class="logo-section">
+        <h1>🌾 Personal Farmer Dashboard</h1>
+        <p>Track your farming journey & government support</p>
+    </div>
+
+    <nav class="nav-links">
+        <a href="profile.html">Profile</a>
+        <a href="achievements.html">Achievements</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Subsidies</a>
+    </nav>
+
+</header>
+
+<div class="container">
+
+    <!-- Profile Section -->
+    <div class="card">
+        <h2>👨‍🌾 Farmer Details</h2>
+
+        <label>Farmer Name:</label>
+        <input type="text" id="farmerName" placeholder="Enter your name">
+
+        <label>Village:</label>
+        <input type="text" id="village" placeholder="Enter village">
+
+        <label>Total Land (Acres):</label>
+        <input type="number" id="landSize" placeholder="Enter land size">
+
+        <button onclick="saveProfile()">Save Details</button>
+    </div>
+
+    <!-- Crop History -->
+    <div class="card">
+        <h2>🌱 Crop History</h2>
+
+        <label>Crop Name:</label>
+        <input type="text" id="cropName" placeholder="Enter crop">
+
+        <label>Season:</label>
+        <input type="text" id="season" placeholder="Example: Rabi / Kharif">
+
+        <button onclick="addCropHistory()">Add Crop History</button>
+
+        <ul id="cropHistoryList"></ul>
+    </div>
+
+    <!-- Subsidy Eligibility -->
+    <div class="card">
+        <h2>🏛️ Subsidy Eligibility</h2>
+
+        <label>Select Crop Type:</label>
+        <select id="cropType">
+            <option>Wheat</option>
+            <option>Rice</option>
+            <option>Vegetables</option>
+            <option>Rare Spices</option>
+        </select>
+
+        <button onclick="checkEligibility()">
+            Check Eligibility
+        </button>
+
+        <div id="eligibilityResult"></div>
+    </div>
+
+    <!-- Dashboard Summary -->
+    <div class="card">
+        <h2>📊 Dashboard Summary</h2>
+
+        <div id="summary">
+            <p>No farmer data available.</p>
+        </div>
+    </div>
+
+</div>
+<script src="personal_dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+/* ------------------------------
+   GLOBAL STYLING
+------------------------------ */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    /* Background Image */
+    background-image: url('/Images/golden-grassland-sunset-panorama-dk.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: white;
+}
+
+/* ------------------------------
+   FIXED NAVBAR
+------------------------------ */
+
+.navbar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 40px;
+
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    z-index: 1000;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* Logo Section */
+
+.logo-section h1 {
+    margin: 0;
+    font-size: 28px;
+    color: white;
+}
+
+.logo-section p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #d7ffd9;
+}
+
+/* Navigation Links */
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    margin-right: 70px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #8cff95;
+}
+
+/* ------------------------------
+   MAIN CONTAINER
+------------------------------ */
+
+.container {
+    width: 80%;
+    margin: auto;
+    margin-top: 150px;
+}
+
+/* ------------------------------
+   CARDS
+------------------------------ */
+
+.card {
+    background: rgba(0, 0, 0, 0.55);
+
+    padding: 20px;
+    margin-bottom: 20px;
+
+    border-left: 5px solid #7c4c1cb0;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    backdrop-filter: blur(5px);
+}
+
+/* Headings */
+
+h2 {
+    color: #e6892cb0;
+    margin-top: 0;
+}
+
+/* Inputs & Select */
+
+input,
+select {
+    width: 100%;
+
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    background: rgba(255,255,255,0.9);
+}
+
+/* Buttons */
+
+button {
+    padding: 10px 20px;
+
+    background: #7c4c1cb0;
+    color: white;
+
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background: #623c16b0;
+    transform: scale(1.03);
+}
+
+/* Crop History List */
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #e8f5e9;
+
+    color: black;
+
+    padding: 10px;
+    margin-bottom: 10px;
+
+    border-radius: 5px;
+}
+
+/* Summary Box */
+
+#summary {
+    background: rgba(0,0,0,0.7);
+
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* Eligibility Result */
+
+#eligibilityResult {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #8cff95;
+}
