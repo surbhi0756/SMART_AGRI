@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Inter } from 'next/font/google' // Change Geist to Inter
 import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import 'globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] }) // Use Inter here  
 
 export const metadata: Metadata = {
   title: 'FarmConnect - Community & Future Scope',
@@ -31,15 +30,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en" className="bg-background">
-      <body className="font-sans antialiased">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
-      </body>
+    <html lang="en">
+      <body className={inter.className}>{children}</body> 
     </html>
   )
 }
